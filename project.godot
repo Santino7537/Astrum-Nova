@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.6", "GL Compatibility")
 [autoload]
 
 Constants="*uid://me2paug1et5q"
+GlobalSettings="*uid://psc365gn5fca"
 
 [physics]
 
