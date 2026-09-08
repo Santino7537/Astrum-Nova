@@ -1,4 +1,4 @@
-extends RefCounted
+extends Node
 
 ## Ruta del archivo de configuración
 const SETTINGS_PATH := "user://settings.cfg"
@@ -6,10 +6,10 @@ const SETTINGS_PATH := "user://settings.cfg"
 ## Ruta del sistema de archivos del usuario
 var file_system_path: String = ""
 
-func _ready() -> void:
-	_load_from_disk()
+func _init() -> void:
+	load_from_disk()
 
-func _load_from_disk() -> void:
+func load_from_disk() -> void:
 	var config := ConfigFile.new()
 	if config.load(SETTINGS_PATH) == OK:
 		file_system_path = config.get_value("paths", "file_system_path", "")

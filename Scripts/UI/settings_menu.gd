@@ -54,7 +54,7 @@ func _on_save_pressed() -> void:
 			print("La ruta seleccionada no es válida: ", selected_path)
 			return
 	
-	GlobalSettings.set_simulation_save_path(selected_path)
+	GlobalSettings.set_file_system_path(selected_path)
 	_on_close_pressed()
 
 func _on_close_pressed() -> void:
