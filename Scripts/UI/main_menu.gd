@@ -3,10 +3,10 @@ extends Control
 const SETTINGS_MENU_SCENE := preload("res://Scripts/UI/settings_menu.tscn")
 
 func _on_create_sim_pressed() -> void:
-	pass # Replace with function body.
+	pass 
 
 func _on_open_sim_pressed() -> void:
-	pass # Replace with function body.
+	pass 
 
 func _on_settings_pressed() -> void:
 	var root := get_tree().current_scene

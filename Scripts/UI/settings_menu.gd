@@ -8,17 +8,33 @@ func _ready() -> void:
 	_animate_in()
 
 func _animate_in() -> void:
-	var tween := create_tween()
-	tween.set_trans(Tween.TRANS_QUAD)
+
+	settings_panel.pivot_offset = settings_panel.size / 2.0
+	settings_panel.scale = Vector2(0.8, 0.8)
+	settings_panel.modulate.a = 0.0
+	
+	var tween := create_tween().set_parallel(true)
+	tween.set_trans(Tween.TRANS_BACK)
 	tween.set_ease(Tween.EASE_OUT)
-	tween.tween_property(settings_panel, "position:x", 0.0, 0.25)
+	tween.tween_property(settings_panel, "scale", Vector2.ONE, 0.25)
+	tween.tween_property(settings_panel, "modulate:a", 1.0, 0.2)
 
 func _animate_out() -> void:
-	var tween := create_tween()
+	settings_panel.pivot_offset = settings_panel.size / 2.0
+	
+	var tween := create_tween().set_parallel(true)
 	tween.set_trans(Tween.TRANS_QUAD)
 	tween.set_ease(Tween.EASE_IN)
-	tween.tween_property(settings_panel, "position:x", -settings_panel.size.x - 40, 0.2)
-	tween.finished.connect(queue_free)
+	tween.tween_property(settings_panel, "scale", Vector2(0.8, 0.8), 0.2)
+	tween.tween_property(settings_panel, "modulate:a", 0.0, 0.2)
+	
+	# Destruye el CanvasLayer entero (nodo raíz) al finalizar la animación
+	tween.chain().tween_callback(func() -> void:
+		if get_parent() is CanvasLayer:
+			get_parent().queue_free()
+		else:
+			queue_free()
+	)
 
 func _on_browse_pressed() -> void:
 	var dialog := FileDialog.new()

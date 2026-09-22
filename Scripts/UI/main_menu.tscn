@@ -1,20 +1,72 @@
 [gd_scene format=3 uid="uid://2kxgsalixmxp"]
 
 [ext_resource type="Script" uid="uid://l1al4qmu1wht" path="res://Scripts/UI/main_menu.gd" id="1_28flt"]
+[ext_resource type="Theme" path="res://Scripts/UI/ui_theme.tres" id="2_theme"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_erv1k"]
-bg_color = Color(0.029506553, 0.029506562, 0.029506536, 1)
+[sub_resource type="Gradient" id="Gradient_bg"]
+colors = PackedColorArray(0.01, 0.02, 0.04, 1, 0.06, 0.09, 0.16, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_28flt"]
-bg_color = Color(0.03137255, 0.03137255, 0.03137255, 0)
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bg"]
+gradient = SubResource("Gradient_bg")
+width = 256
+height = 256
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_48xlc"]
-bg_color = Color(1, 1, 1, 0.11764706)
+[sub_resource type="Gradient" id="Gradient_star_alpha"]
+offsets = PackedFloat32Array(0, 0.2, 0.8, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.9, 1, 1, 1, 0.9, 1, 1, 1, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ehe0"]
-bg_color = Color(1, 1, 1, 0.05882353)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_pill"]
+bg_color = Color(0.88, 0.93, 0.98, 0.95)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.3, 0.65, 1, 0.35)
+shadow_size = 12
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_erv1k"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_pill_hover"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.4, 0.75, 1, 0.6)
+shadow_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_pill_pressed"]
+bg_color = Color(0.75, 0.82, 0.9, 0.95)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.2, 0.5, 0.85, 0.25)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_secondary_pill"]
+bg_color = Color(0.06, 0.09, 0.16, 0.5)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.6, 0.85, 0.3)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_secondary_pill_hover"]
+bg_color = Color(0.1, 0.16, 0.28, 0.75)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.75, 1, 0.6)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [node name="MainMenu" type="Control" unique_id=1911691164]
 process_mode = 3
@@ -24,58 +76,115 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_theme")
 script = ExtResource("1_28flt")
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=554252080]
+[node name="Background" type="TextureRect" parent="." unique_id=2064389045]
 layout_mode = 1
-anchors_preset = 9
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 300.0
+grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_erv1k")
+texture = SubResource("GradientTexture2D_bg")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1715739259]
+[node name="StarField" type="CPUParticles2D" parent="." unique_id=876249624]
+position = Vector2(960, 540)
+amount = 140
+lifetime = 16.0
+preprocess = 16.0
+emission_shape = 3
+emission_rect_extents = Vector2(1150, 540)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 12.0
+initial_velocity_max = 28.0
+scale_amount_min = 0.5
+color_initial_ramp = SubResource("Gradient_star_alpha")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1095604125]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1525196716]
+custom_minimum_size = Vector2(380, 0)
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="CategoryLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=403312131]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.75, 0.95, 0.8)
+theme_override_font_sizes/font_size = 15
+text = "SIMULADOR DE ÓRBITAS"
+horizontal_alignment = 1
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=690313283]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.97, 1, 1)
+theme_override_font_sizes/font_size = 46
+text = "ASTRUM NOVA"
+horizontal_alignment = 1
+
+[node name="CyanLine" type="ColorRect" parent="CenterContainer/VBoxContainer" unique_id=1451356077]
+custom_minimum_size = Vector2(40, 2)
 layout_mode = 2
 size_flags_horizontal = 4
+color = Color(0.35, 0.8, 0.95, 0.9)
 
-[node name="CreateSim" type="Button" parent="PanelContainer/VBoxContainer" unique_id=499643634]
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/VBoxContainer" unique_id=1678101667]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
-theme_override_constants/h_separation = 4
-theme_override_styles/normal = SubResource("StyleBoxFlat_28flt")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_48xlc")
-theme_override_styles/hover = SubResource("StyleBoxFlat_1ehe0")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_erv1k")
-text = "Create simulation"
+theme_override_constants/margin_top = 20
 
-[node name="OpenSim" type="Button" parent="PanelContainer/VBoxContainer" unique_id=837216570]
+[node name="ButtonsVBox" type="VBoxContainer" parent="CenterContainer/VBoxContainer/MarginContainer" unique_id=364943938]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_28flt")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_48xlc")
-theme_override_styles/hover = SubResource("StyleBoxFlat_1ehe0")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_erv1k")
-text = "Open simulation"
+theme_override_constants/separation = 12
 
-[node name="Settings" type="Button" parent="PanelContainer/VBoxContainer" unique_id=1232584096]
+[node name="CreateSim" type="Button" parent="CenterContainer/VBoxContainer/MarginContainer/ButtonsVBox" unique_id=499643634]
+custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_28flt")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_48xlc")
-theme_override_styles/hover = SubResource("StyleBoxFlat_1ehe0")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_erv1k")
-text = "Settings"
+theme_override_colors/font_color = Color(0.04, 0.07, 0.12, 1)
+theme_override_colors/font_hover_color = Color(0.02, 0.04, 0.08, 1)
+theme_override_colors/font_pressed_color = Color(0.04, 0.07, 0.12, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_primary_pill")
+theme_override_styles/hover = SubResource("StyleBoxFlat_primary_pill_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_primary_pill_pressed")
+text = "CREATE SIMULATION"
 
-[node name="Exit" type="Button" parent="PanelContainer/VBoxContainer" unique_id=1306276406]
+[node name="OpenSim" type="Button" parent="CenterContainer/VBoxContainer/MarginContainer/ButtonsVBox" unique_id=837216570]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_28flt")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_48xlc")
-theme_override_styles/hover = SubResource("StyleBoxFlat_1ehe0")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_erv1k")
-text = "Exit"
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_secondary_pill")
+theme_override_styles/hover = SubResource("StyleBoxFlat_secondary_pill_hover")
+text = "OPEN SIMULATION"
 
-[connection signal="pressed" from="PanelContainer/VBoxContainer/CreateSim" to="." method="_on_create_sim_pressed"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/OpenSim" to="." method="_on_open_sim_pressed"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[node name="Settings" type="Button" parent="CenterContainer/VBoxContainer/MarginContainer/ButtonsVBox" unique_id=1232584096]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_secondary_pill")
+theme_override_styles/hover = SubResource("StyleBoxFlat_secondary_pill_hover")
+text = "SETTINGS"
+
+[node name="Exit" type="Button" parent="CenterContainer/VBoxContainer/MarginContainer/ButtonsVBox" unique_id=1306276406]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.65, 0.75, 0.6)
+theme_override_colors/font_hover_color = Color(0.95, 0.45, 0.5, 1)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_secondary_pill")
+theme_override_styles/hover = SubResource("StyleBoxFlat_secondary_pill_hover")
+text = "EXIT"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/MarginContainer/ButtonsVBox/CreateSim" to="." method="_on_create_sim_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/MarginContainer/ButtonsVBox/OpenSim" to="." method="_on_open_sim_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/MarginContainer/ButtonsVBox/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/MarginContainer/ButtonsVBox/Exit" to="." method="_on_exit_pressed"]

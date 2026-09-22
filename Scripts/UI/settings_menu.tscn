@@ -1,13 +1,89 @@
 [gd_scene format=3 uid="uid://b6u1mksh2u5na"]
 
 [ext_resource type="Script" uid="uid://dwjymbujgxf8e" path="res://Scripts/UI/settings_menu.gd" id="1_15evt"]
+[ext_resource type="Theme" path="res://Scripts/UI/ui_theme.tres" id="2_theme"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
-bg_color = Color(0.03137255, 0.03137255, 0.03137255, 1)
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.06, 0.09, 0.16, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.6, 0.85, 0.35)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 20
+content_margin_left = 28.0
+content_margin_top = 24.0
+content_margin_right = 28.0
+content_margin_bottom = 24.0
 
-[node name="SettingsMenu" type="Control" unique_id=1951074628]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_pill"]
+bg_color = Color(0.88, 0.93, 0.98, 0.95)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.3, 0.65, 1, 0.35)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_pill_hover"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.4, 0.75, 1, 0.6)
+shadow_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_pill_pressed"]
+bg_color = Color(0.75, 0.82, 0.9, 0.95)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.2, 0.5, 0.85, 0.25)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_secondary_pill"]
+bg_color = Color(0.06, 0.09, 0.16, 0.5)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.6, 0.85, 0.3)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_secondary_pill_hover"]
+bg_color = Color(0.1, 0.16, 0.28, 0.75)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.75, 1, 0.6)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="SettingsCanvas" type="CanvasLayer"]
+layer = 10
+
+[node name="Overlay" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="SettingsMenu" type="Control" parent="." unique_id=1951074628]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,54 +91,100 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
+theme = ExtResource("2_theme")
 script = ExtResource("1_15evt")
 
-[node name="SettingsPanel" type="PanelContainer" parent="." unique_id=870750849]
+[node name="SettingsPanel" type="PanelContainer" parent="SettingsMenu" unique_id=870750849]
+custom_minimum_size = Vector2(440, 0)
 layout_mode = 1
-offset_left = -420.0
-offset_bottom = 720.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -170.0
+offset_right = 220.0
+offset_bottom = 170.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel" unique_id=1792354445]
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu/SettingsPanel" unique_id=1792354445]
 layout_mode = 2
 theme_override_constants/separation = 18
 
-[node name="Title" type="Label" parent="SettingsPanel/VBoxContainer" unique_id=1361640722]
+[node name="Title" type="Label" parent="SettingsMenu/SettingsPanel/VBoxContainer" unique_id=1361640722]
 layout_mode = 2
-text = "Settings"
+theme_override_colors/font_color = Color(0.95, 0.97, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "SETTINGS"
 horizontal_alignment = 1
 
-[node name="PathRow" type="HBoxContainer" parent="SettingsPanel/VBoxContainer" unique_id=1434733604]
+[node name="CyanLine" type="ColorRect" parent="SettingsMenu/SettingsPanel/VBoxContainer"]
+custom_minimum_size = Vector2(40, 2)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0.35, 0.8, 0.95, 0.9)
+
+[node name="PathRow" type="HBoxContainer" parent="SettingsMenu/SettingsPanel/VBoxContainer" unique_id=1434733604]
 auto_translate_mode = 2
 layout_mode = 2
+theme_override_constants/separation = 12
 
-[node name="PathLabel" type="Label" parent="SettingsPanel/VBoxContainer/PathRow" unique_id=521092925]
+[node name="PathLabel" type="Label" parent="SettingsMenu/SettingsPanel/VBoxContainer/PathRow" unique_id=521092925]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
 text = "Save path"
+vertical_alignment = 1
 
-[node name="PathLineEdit" type="LineEdit" parent="SettingsPanel/VBoxContainer/PathRow" unique_id=22582585]
+[node name="PathLineEdit" type="LineEdit" parent="SettingsMenu/SettingsPanel/VBoxContainer/PathRow" unique_id=22582585]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Selecciona una carpeta"
 
-[node name="BrowseButton" type="Button" parent="SettingsPanel/VBoxContainer/PathRow" unique_id=966581931]
+[node name="BrowseButton" type="Button" parent="SettingsMenu/SettingsPanel/VBoxContainer/PathRow" unique_id=966581931]
+custom_minimum_size = Vector2(90, 36)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_secondary_pill")
+theme_override_styles/hover = SubResource("StyleBoxFlat_secondary_pill_hover")
 text = "Browse"
 
-[node name="Actions" type="HBoxContainer" parent="SettingsPanel/VBoxContainer" unique_id=407413366]
+[node name="Spacer" type="Control" parent="SettingsMenu/SettingsPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Actions" type="HBoxContainer" parent="SettingsMenu/SettingsPanel/VBoxContainer" unique_id=407413366]
 layout_mode = 2
 alignment = 1
+theme_override_constants/separation = 12
 
-[node name="SaveButton" type="Button" parent="SettingsPanel/VBoxContainer/Actions" unique_id=145511992]
+[node name="SaveButton" type="Button" parent="SettingsMenu/SettingsPanel/VBoxContainer/Actions" unique_id=145511992]
+custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.04, 0.07, 0.12, 1)
+theme_override_colors/font_hover_color = Color(0.02, 0.04, 0.08, 1)
+theme_override_colors/font_pressed_color = Color(0.04, 0.07, 0.12, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_primary_pill")
+theme_override_styles/hover = SubResource("StyleBoxFlat_primary_pill_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_primary_pill_pressed")
 text = "Save"
 
-[node name="CloseButton" type="Button" parent="SettingsPanel/VBoxContainer/Actions" unique_id=419299298]
+[node name="CloseButton" type="Button" parent="SettingsMenu/SettingsPanel/VBoxContainer/Actions" unique_id=419299298]
+custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_secondary_pill")
+theme_override_styles/hover = SubResource("StyleBoxFlat_secondary_pill_hover")
 text = "Close"
 
-[connection signal="pressed" from="SettingsPanel/VBoxContainer/PathRow/BrowseButton" to="." method="_on_browse_pressed"]
-[connection signal="pressed" from="SettingsPanel/VBoxContainer/Actions/SaveButton" to="." method="_on_save_pressed"]
-[connection signal="pressed" from="SettingsPanel/VBoxContainer/Actions/CloseButton" to="." method="_on_close_pressed"]
+[connection signal="pressed" from="SettingsMenu/SettingsPanel/VBoxContainer/PathRow/BrowseButton" to="SettingsMenu" method="_on_browse_pressed"]
+[connection signal="pressed" from="SettingsMenu/SettingsPanel/VBoxContainer/Actions/SaveButton" to="SettingsMenu" method="_on_save_pressed"]
+[connection signal="pressed" from="SettingsMenu/SettingsPanel/VBoxContainer/Actions/CloseButton" to="SettingsMenu" method="_on_close_pressed"]
