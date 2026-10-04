@@ -6,6 +6,9 @@ const SETTINGS_PATH := "user://settings.cfg"
 ## Ruta del sistema de archivos del usuario
 var file_system_path: String = ""
 
+## Ruta del proyecto actuál
+var current_project_path: String = ""
+
 func _init() -> void:
 	load_from_disk()
 

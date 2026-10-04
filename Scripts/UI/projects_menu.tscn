@@ -1,0 +1,138 @@
+[gd_scene format=3 uid="uid://cby4wfe8gb70o"]
+
+[ext_resource type="Script" uid="uid://bobq68utoc5a7" path="res://Scripts/UI/projects_menu.gd" id="1_script"]
+[ext_resource type="Theme" uid="uid://ckxp7lacnlyty" path="res://Scripts/UI/ui_theme.tres" id="2_theme"]
+
+[sub_resource type="StyleBoxFlat" id="PanelStyle"]
+content_margin_left = 28.0
+content_margin_top = 24.0
+content_margin_right = 28.0
+content_margin_bottom = 24.0
+bg_color = Color(0.06, 0.09, 0.16, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.6, 0.85, 0.35)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 20
+
+[sub_resource type="StyleBoxFlat" id="SecondaryButton"]
+bg_color = Color(0.06, 0.09, 0.16, 0.5)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.6, 0.85, 0.3)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="SecondaryButtonHover"]
+bg_color = Color(0.1, 0.16, 0.28, 0.75)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.75, 1, 0.6)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="ProjectsCanvas" type="CanvasLayer" unique_id=1176891270]
+layer = 10
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=322778656]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="ProjectsMenu" type="Control" parent="." unique_id=128061715]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("2_theme")
+script = ExtResource("1_script")
+
+[node name="ProjectsPanel" type="PanelContainer" parent="ProjectsMenu" unique_id=1990771612]
+custom_minimum_size = Vector2(440, 500)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -250.0
+offset_right = 220.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("PanelStyle")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ProjectsMenu/ProjectsPanel" unique_id=351152355]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="ProjectsMenu/ProjectsPanel/VBoxContainer" unique_id=1417247487]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.97, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "OPEN SIMULATION"
+horizontal_alignment = 1
+
+[node name="CyanLine" type="ColorRect" parent="ProjectsMenu/ProjectsPanel/VBoxContainer" unique_id=2055391591]
+custom_minimum_size = Vector2(40, 2)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0.35, 0.8, 0.95, 0.9)
+
+[node name="ProjectsList" type="ScrollContainer" parent="ProjectsMenu/ProjectsPanel/VBoxContainer" unique_id=1944695029]
+custom_minimum_size = Vector2(0, 320)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 3
+
+[node name="ProjectRows" type="VBoxContainer" parent="ProjectsMenu/ProjectsPanel/VBoxContainer/ProjectsList" unique_id=1608577796]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="EmptyState" type="Label" parent="ProjectsMenu/ProjectsPanel/VBoxContainer" unique_id=2021453195]
+visible = false
+custom_minimum_size = Vector2(0, 320)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.75, 0.84, 1)
+theme_override_font_sizes/font_size = 14
+text = "No projects found in the configured folder."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Actions" type="HBoxContainer" parent="ProjectsMenu/ProjectsPanel/VBoxContainer" unique_id=1056641320]
+layout_mode = 2
+alignment = 1
+
+[node name="CloseButton" type="Button" parent="ProjectsMenu/ProjectsPanel/VBoxContainer/Actions" unique_id=1449610475]
+custom_minimum_size = Vector2(180, 42)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("SecondaryButton")
+theme_override_styles/hover = SubResource("SecondaryButtonHover")
+text = "Close"
+
+[connection signal="pressed" from="ProjectsMenu/ProjectsPanel/VBoxContainer/Actions/CloseButton" to="ProjectsMenu" method="_on_close_pressed"]
