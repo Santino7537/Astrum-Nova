@@ -1,7 +1,7 @@
 extends Control
 
-const PROJECT_ROW_SCENE := preload("res://Scripts/UI/project_row.tscn")
-const ProjectRow := preload("res://Scripts/UI/project_row.gd")
+const PROJECT_ROW_SCENE := preload("res://Scripts/UI/Menus/Projects/project_row.tscn")
+const ProjectRow := preload("res://Scripts/UI/Menus/Projects/project_row.gd")
 
 @onready var projects_panel: PanelContainer = $ProjectsPanel
 @onready var projects_list: ScrollContainer = $ProjectsPanel/VBoxContainer/ProjectsList

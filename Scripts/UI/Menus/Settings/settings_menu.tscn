@@ -1,9 +1,13 @@
 [gd_scene format=3 uid="uid://b6u1mksh2u5na"]
 
-[ext_resource type="Script" uid="uid://dwjymbujgxf8e" path="res://Scripts/UI/settings_menu.gd" id="1_15evt"]
-[ext_resource type="Theme" path="res://Scripts/UI/ui_theme.tres" id="2_theme"]
+[ext_resource type="Script" uid="uid://dwjymbujgxf8e" path="res://Scripts/UI/Menus/Settings/settings_menu.gd" id="1_15evt"]
+[ext_resource type="Theme" uid="uid://ckxp7lacnlyty" path="res://Scripts/UI/Menus/ui_theme.tres" id="2_theme"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 28.0
+content_margin_top = 24.0
+content_margin_right = 28.0
+content_margin_bottom = 24.0
 bg_color = Color(0.06, 0.09, 0.16, 1)
 border_width_left = 1
 border_width_top = 1
@@ -16,37 +20,6 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 shadow_color = Color(0, 0, 0, 0.5)
 shadow_size = 20
-content_margin_left = 28.0
-content_margin_top = 24.0
-content_margin_right = 28.0
-content_margin_bottom = 24.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_pill"]
-bg_color = Color(0.88, 0.93, 0.98, 0.95)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-shadow_color = Color(0.3, 0.65, 1, 0.35)
-shadow_size = 12
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_pill_hover"]
-bg_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-shadow_color = Color(0.4, 0.75, 1, 0.6)
-shadow_size = 18
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_pill_pressed"]
-bg_color = Color(0.75, 0.82, 0.9, 0.95)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-shadow_color = Color(0.2, 0.5, 0.85, 0.25)
-shadow_size = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_secondary_pill"]
 bg_color = Color(0.06, 0.09, 0.16, 0.5)
@@ -72,10 +45,37 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[node name="SettingsCanvas" type="CanvasLayer"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_pill"]
+bg_color = Color(0.88, 0.93, 0.98, 0.95)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.3, 0.65, 1, 0.35)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_pill_pressed"]
+bg_color = Color(0.75, 0.82, 0.9, 0.95)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.2, 0.5, 0.85, 0.25)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_pill_hover"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.4, 0.75, 1, 0.6)
+shadow_size = 18
+
+[node name="SettingsCanvas" type="CanvasLayer" unique_id=1513732699]
 layer = 10
 
-[node name="Overlay" type="ColorRect" parent="."]
+[node name="Overlay" type="ColorRect" parent="." unique_id=66123433]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -121,7 +121,7 @@ theme_override_font_sizes/font_size = 20
 text = "SETTINGS"
 horizontal_alignment = 1
 
-[node name="CyanLine" type="ColorRect" parent="SettingsMenu/SettingsPanel/VBoxContainer"]
+[node name="CyanLine" type="ColorRect" parent="SettingsMenu/SettingsPanel/VBoxContainer" unique_id=30891151]
 custom_minimum_size = Vector2(40, 2)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -153,26 +153,26 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_secondary_pill")
 theme_override_styles/hover = SubResource("StyleBoxFlat_secondary_pill_hover")
 text = "Browse"
 
-[node name="Spacer" type="Control" parent="SettingsMenu/SettingsPanel/VBoxContainer"]
+[node name="Spacer" type="Control" parent="SettingsMenu/SettingsPanel/VBoxContainer" unique_id=410231531]
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Actions" type="HBoxContainer" parent="SettingsMenu/SettingsPanel/VBoxContainer" unique_id=407413366]
 layout_mode = 2
-alignment = 1
 theme_override_constants/separation = 12
+alignment = 1
 
 [node name="SaveButton" type="Button" parent="SettingsMenu/SettingsPanel/VBoxContainer/Actions" unique_id=145511992]
 custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.04, 0.07, 0.12, 1)
-theme_override_colors/font_hover_color = Color(0.02, 0.04, 0.08, 1)
 theme_override_colors/font_pressed_color = Color(0.04, 0.07, 0.12, 1)
+theme_override_colors/font_hover_color = Color(0.02, 0.04, 0.08, 1)
 theme_override_font_sizes/font_size = 14
 theme_override_styles/normal = SubResource("StyleBoxFlat_primary_pill")
-theme_override_styles/hover = SubResource("StyleBoxFlat_primary_pill_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_primary_pill_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_primary_pill_hover")
 text = "Save"
 
 [node name="CloseButton" type="Button" parent="SettingsMenu/SettingsPanel/VBoxContainer/Actions" unique_id=419299298]

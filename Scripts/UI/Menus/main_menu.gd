@@ -1,7 +1,7 @@
 extends Control
 
-const SETTINGS_MENU_SCENE := preload("res://Scripts/UI/settings_menu.tscn")
-const PROJECTS_MENU_SCENE := preload("res://Scripts/UI/projects_menu.tscn")
+const SETTINGS_MENU_SCENE := preload("res://Scripts/UI/Menus/Settings/settings_menu.tscn")
+const PROJECTS_MENU_SCENE := preload("res://Scripts/UI/Menus/Projects/projects_menu.tscn")
 
 func _on_create_sim_pressed() -> void:
 	pass 

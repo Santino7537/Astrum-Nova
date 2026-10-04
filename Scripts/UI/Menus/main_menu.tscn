@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://2kxgsalixmxp"]
 
-[ext_resource type="Script" uid="uid://l1al4qmu1wht" path="res://Scripts/UI/main_menu.gd" id="1_28flt"]
-[ext_resource type="Theme" uid="uid://ckxp7lacnlyty" path="res://Scripts/UI/ui_theme.tres" id="2_theme"]
+[ext_resource type="Script" uid="uid://l1al4qmu1wht" path="res://Scripts/UI/Menus/main_menu.gd" id="1_28flt"]
+[ext_resource type="Theme" uid="uid://ckxp7lacnlyty" path="res://Scripts/UI/Menus/ui_theme.tres" id="2_theme"]
 
 [sub_resource type="Gradient" id="Gradient_bg"]
 colors = PackedColorArray(0.01, 0.02, 0.04, 1, 0.06, 0.09, 0.16, 1)
