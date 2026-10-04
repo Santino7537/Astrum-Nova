@@ -1,0 +1,197 @@
+[gd_scene format=3 uid="uid://cby4wfe8gb70o"]
+
+[ext_resource type="Theme" uid="uid://ckxp7lacnlyty" path="res://Scripts/UI/Menus/ui_theme.tres" id="1_b17du"]
+[ext_resource type="Script" uid="uid://ipuibauhnxta" path="res://Scripts/UI/Menus/Projects/project_creation_menu.gd" id="2_b17du"]
+
+[sub_resource type="StyleBoxFlat" id="PanelStyle"]
+content_margin_left = 28.0
+content_margin_top = 24.0
+content_margin_right = 28.0
+content_margin_bottom = 24.0
+bg_color = Color(0.06, 0.09, 0.16, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.6, 0.85, 0.35)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xselr"]
+bg_color = Color(0.88, 0.93, 0.98, 0.95)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.3, 0.65, 1, 0.35)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vky6v"]
+bg_color = Color(0.75, 0.82, 0.9, 0.95)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.2, 0.5, 0.85, 0.25)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fygu6"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.4, 0.75, 1, 0.6)
+shadow_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gvyfv"]
+bg_color = Color(0.06, 0.09, 0.16, 0.5)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.6, 0.85, 0.3)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pt7kj"]
+bg_color = Color(0.1, 0.16, 0.28, 0.75)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.75, 1, 0.6)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="ProjectCreationCanvas" type="CanvasLayer" unique_id=1176891270]
+layer = 10
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=322778656]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="ProjectCreationMenu" type="Control" parent="." unique_id=128061715]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_b17du")
+script = ExtResource("2_b17du")
+
+[node name="ProjectCreationPanel" type="PanelContainer" parent="ProjectCreationMenu" unique_id=1990771612]
+custom_minimum_size = Vector2(440, 300)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -150.0
+offset_right = 220.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("PanelStyle")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ProjectCreationMenu/ProjectCreationPanel" unique_id=351152355]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="ProjectCreationMenu/ProjectCreationPanel/VBoxContainer" unique_id=1417247487]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.97, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "CREATE  SIMULATION"
+horizontal_alignment = 1
+
+[node name="CyanLine" type="ColorRect" parent="ProjectCreationMenu/ProjectCreationPanel/VBoxContainer" unique_id=2055391591]
+custom_minimum_size = Vector2(40, 2)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0.35, 0.8, 0.95, 0.9)
+
+[node name="ProjectRow" type="HBoxContainer" parent="ProjectCreationMenu/ProjectCreationPanel/VBoxContainer" unique_id=273033304]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ProjectLabel" type="Label" parent="ProjectCreationMenu/ProjectCreationPanel/VBoxContainer/ProjectRow" unique_id=1887484844]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "Project name"
+vertical_alignment = 1
+
+[node name="ProjectLineEdit" type="LineEdit" parent="ProjectCreationMenu/ProjectCreationPanel/VBoxContainer/ProjectRow" unique_id=1923619181]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "NewProject123"
+
+[node name="SimulationRow" type="HBoxContainer" parent="ProjectCreationMenu/ProjectCreationPanel/VBoxContainer" unique_id=836734649]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SimulationLabel" type="Label" parent="ProjectCreationMenu/ProjectCreationPanel/VBoxContainer/SimulationRow" unique_id=679798673]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "Simulation name"
+vertical_alignment = 1
+
+[node name="SimulationLineEdit" type="LineEdit" parent="ProjectCreationMenu/ProjectCreationPanel/VBoxContainer/SimulationRow" unique_id=131252376]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "FirstSimulation"
+
+[node name="Spacer" type="Control" parent="ProjectCreationMenu/ProjectCreationPanel/VBoxContainer" unique_id=1092530979]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Actions" type="HBoxContainer" parent="ProjectCreationMenu/ProjectCreationPanel/VBoxContainer" unique_id=1767359682]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="SaveButton" type="Button" parent="ProjectCreationMenu/ProjectCreationPanel/VBoxContainer/Actions" unique_id=1105299]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.04, 0.07, 0.12, 1)
+theme_override_colors/font_pressed_color = Color(0.04, 0.07, 0.12, 1)
+theme_override_colors/font_hover_color = Color(0.02, 0.04, 0.08, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_xselr")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vky6v")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fygu6")
+text = "Save"
+
+[node name="CloseButton" type="Button" parent="ProjectCreationMenu/ProjectCreationPanel/VBoxContainer/Actions" unique_id=201061582]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_gvyfv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pt7kj")
+text = "Close"
+
+[connection signal="pressed" from="ProjectCreationMenu/ProjectCreationPanel/VBoxContainer/Actions/SaveButton" to="ProjectCreationMenu" method="_on_save_button_pressed"]
+[connection signal="pressed" from="ProjectCreationMenu/ProjectCreationPanel/VBoxContainer/Actions/CloseButton" to="ProjectCreationMenu" method="_on_close_button_pressed"]

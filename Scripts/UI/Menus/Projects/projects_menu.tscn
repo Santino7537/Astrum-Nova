@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://cby4wfe8gb70o"]
+[gd_scene format=3 uid="uid://cv5bh02l7v46p"]
 
-[ext_resource type="Script" uid="uid://bobq68utoc5a7" path="res://Scripts/UI/Menus/Projects/projects_menu.gd" id="1_script"]
-[ext_resource type="Theme" uid="uid://ckxp7lacnlyty" path="res://Scripts/UI/Menus/ui_theme.tres" id="2_theme"]
+[ext_resource type="Theme" uid="uid://ckxp7lacnlyty" path="res://Scripts/UI/Menus/ui_theme.tres" id="1_b17du"]
+[ext_resource type="Script" uid="uid://bobq68utoc5a7" path="res://Scripts/UI/Menus/Projects/projects_menu.gd" id="2_2o7w0"]
 
 [sub_resource type="StyleBoxFlat" id="PanelStyle"]
 content_margin_left = 28.0
@@ -64,8 +64,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-theme = ExtResource("2_theme")
-script = ExtResource("1_script")
+theme = ExtResource("1_b17du")
+script = ExtResource("2_2o7w0")
 
 [node name="ProjectsPanel" type="PanelContainer" parent="ProjectsMenu" unique_id=1990771612]
 custom_minimum_size = Vector2(440, 500)

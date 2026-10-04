@@ -2,9 +2,16 @@ extends Control
 
 const SETTINGS_MENU_SCENE := preload("res://Scripts/UI/Menus/Settings/settings_menu.tscn")
 const PROJECTS_MENU_SCENE := preload("res://Scripts/UI/Menus/Projects/projects_menu.tscn")
+const PROJECT_CREATION_MENU_SCENE := preload("res://Scripts/UI/Menus/Projects/project_creation_menu.tscn")
 
 func _on_create_sim_pressed() -> void:
-	pass 
+	var root := get_tree().current_scene
+	if root == null or root.has_node("ProjectCreationCanvas"):
+		return
+	
+	var project_creation_menu := PROJECT_CREATION_MENU_SCENE.instantiate()
+	root.add_child(project_creation_menu)
+	project_creation_menu.name = "ProjectCreationMenu"
 
 func _on_open_sim_pressed() -> void:
 	var root := get_tree().current_scene

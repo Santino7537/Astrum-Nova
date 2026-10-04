@@ -53,7 +53,7 @@ func _find_projects(directory_path: String) -> Array[Dictionary]:
 			
 			var project_name := str(parsed_data.get("project_name", ""))
 			if not project_name.is_empty():
-				projects.append({"name": "🖥️ project_name", "path": file_path})
+				projects.append({"name": "🖥️ " + project_name, "path": file_path})
 	
 	return projects
 
