@@ -1,0 +1,196 @@
+[gd_scene format=3 uid="uid://dleep26pls3v3"]
+
+[ext_resource type="Theme" uid="uid://ckxp7lacnlyty" path="res://Scripts/UI/Menus/ui_theme.tres" id="1_g8mgt"]
+[ext_resource type="Script" uid="uid://bkriatg7wyedt" path="res://Scripts/UI/Menus/connect_menu.gd" id="2_g8mgt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qdj6"]
+content_margin_left = 28.0
+content_margin_top = 24.0
+content_margin_right = 28.0
+content_margin_bottom = 24.0
+bg_color = Color(0.06, 0.09, 0.16, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.6, 0.85, 0.35)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cddh2"]
+bg_color = Color(0.88, 0.93, 0.98, 0.95)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.3, 0.65, 1, 0.35)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kqm4o"]
+bg_color = Color(0.75, 0.82, 0.9, 0.95)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.2, 0.5, 0.85, 0.25)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o2b4u"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.4, 0.75, 1, 0.6)
+shadow_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l302o"]
+bg_color = Color(0.06, 0.09, 0.16, 0.5)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.6, 0.85, 0.3)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yx6qp"]
+bg_color = Color(0.1, 0.16, 0.28, 0.75)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.75, 1, 0.6)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="ConnectMenu" type="CanvasLayer" unique_id=1842145505]
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=821141677]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="ConnectMenu" type="Control" parent="." unique_id=1649411899]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_g8mgt")
+script = ExtResource("2_g8mgt")
+
+[node name="ConnectPanel" type="PanelContainer" parent="ConnectMenu" unique_id=350776718]
+custom_minimum_size = Vector2(440, 300)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -150.0
+offset_right = 220.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3qdj6")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConnectMenu/ConnectPanel" unique_id=1379859277]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="ConnectMenu/ConnectPanel/VBoxContainer" unique_id=247940577]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.97, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "CONNECT TO SERVER"
+horizontal_alignment = 1
+
+[node name="CyanLine" type="ColorRect" parent="ConnectMenu/ConnectPanel/VBoxContainer" unique_id=1151242992]
+custom_minimum_size = Vector2(40, 2)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0.35, 0.8, 0.95, 0.9)
+
+[node name="ServerRow" type="HBoxContainer" parent="ConnectMenu/ConnectPanel/VBoxContainer" unique_id=81890101]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ServerLabel" type="Label" parent="ConnectMenu/ConnectPanel/VBoxContainer/ServerRow" unique_id=605769003]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "Server IP "
+vertical_alignment = 1
+
+[node name="ServerLineEdit" type="LineEdit" parent="ConnectMenu/ConnectPanel/VBoxContainer/ServerRow" unique_id=1975532362]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "xxx.xxx.xxx.xxx"
+
+[node name="PasswordRow" type="HBoxContainer" parent="ConnectMenu/ConnectPanel/VBoxContainer" unique_id=1411575802]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PasswordLabel" type="Label" parent="ConnectMenu/ConnectPanel/VBoxContainer/PasswordRow" unique_id=764722597]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "Password"
+vertical_alignment = 1
+
+[node name="PasswordLineEdit" type="LineEdit" parent="ConnectMenu/ConnectPanel/VBoxContainer/PasswordRow" unique_id=1228616704]
+layout_mode = 2
+size_flags_horizontal = 3
+secret = true
+
+[node name="Spacer" type="Control" parent="ConnectMenu/ConnectPanel/VBoxContainer" unique_id=499687301]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Actions" type="HBoxContainer" parent="ConnectMenu/ConnectPanel/VBoxContainer" unique_id=1490652087]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="ConnectButton" type="Button" parent="ConnectMenu/ConnectPanel/VBoxContainer/Actions" unique_id=117281101]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.04, 0.07, 0.12, 1)
+theme_override_colors/font_pressed_color = Color(0.04, 0.07, 0.12, 1)
+theme_override_colors/font_hover_color = Color(0.02, 0.04, 0.08, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_cddh2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kqm4o")
+theme_override_styles/hover = SubResource("StyleBoxFlat_o2b4u")
+text = "Connect"
+
+[node name="CloseButton" type="Button" parent="ConnectMenu/ConnectPanel/VBoxContainer/Actions" unique_id=897726935]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_l302o")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yx6qp")
+text = "Close"
+
+[connection signal="pressed" from="ConnectMenu/ConnectPanel/VBoxContainer/Actions/ConnectButton" to="ConnectMenu" method="_on_connect_button_pressed"]
+[connection signal="pressed" from="ConnectMenu/ConnectPanel/VBoxContainer/Actions/CloseButton" to="ConnectMenu" method="_on_close_button_pressed"]

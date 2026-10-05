@@ -165,6 +165,15 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_secondary_pill")
 theme_override_styles/hover = SubResource("StyleBoxFlat_secondary_pill_hover")
 text = "OPEN SIMULATION"
 
+[node name="Connect" type="Button" parent="CenterContainer/VBoxContainer/MarginContainer/ButtonsVBox" unique_id=1640368035]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_secondary_pill")
+theme_override_styles/hover = SubResource("StyleBoxFlat_secondary_pill_hover")
+text = "CONNECT TO SERVER"
+
 [node name="Settings" type="Button" parent="CenterContainer/VBoxContainer/MarginContainer/ButtonsVBox" unique_id=1232584096]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
@@ -186,5 +195,6 @@ text = "EXIT"
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/MarginContainer/ButtonsVBox/CreateSim" to="." method="_on_create_sim_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/MarginContainer/ButtonsVBox/OpenSim" to="." method="_on_open_sim_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/MarginContainer/ButtonsVBox/Connect" to="." method="_on_connect_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/MarginContainer/ButtonsVBox/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/MarginContainer/ButtonsVBox/Exit" to="." method="_on_exit_pressed"]
