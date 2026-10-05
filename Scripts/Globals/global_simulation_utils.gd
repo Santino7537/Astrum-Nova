@@ -13,6 +13,7 @@ func add_body(body: CelestialBody) -> MeshInstance3D:
 	bodies_meshes[body.id] = body_mesh
 	return body_mesh
 
+## Crea una instancia visible del cuerpo
 func _create_body_mesh(body: CelestialBody) -> MeshInstance3D:
 	var mesh_instance := MeshInstance3D.new()
 	var sphere := SphereMesh.new()
@@ -34,6 +35,13 @@ func remove_body(body_id: String) -> void:
 			bodies.erase(body)
 			bodies_meshes.erase(body_id)
 			return
+
+func remove_all_bodies() -> void:
+	bodies = []
+	for mesh in bodies_meshes.values():
+		mesh.queue_free()
+	
+	bodies_meshes = {}
 
 func has_existing_body(body_id: String) -> bool:
 	return bodies_meshes.has(body_id)

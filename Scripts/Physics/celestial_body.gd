@@ -22,10 +22,26 @@ func _init(mass: float, radius: float, name: String, initial_position: Vector3 =
 	self.name = name if name else id
 	self.color = color
 
-func momentum() -> Vector3:
-	return velocity * mass
+static func dictionary_to_celestial_body(data: Dictionary) -> CelestialBody:
+	var position := Vector3(
+		data["position"][0],
+		data["position"][1],
+		data["position"][2]
+	)
 
-func duplicate_body() -> CelestialBody:
-	var copy := CelestialBody.new(mass, physical_radius, name, position, velocity, color)
-	copy.acceleration = acceleration
-	return copy
+	var velocity := Vector3(
+		data["velocity"][0],
+		data["velocity"][1],
+		data["velocity"][2]
+	)
+
+	var color := Color(data["color"])
+
+	return CelestialBody.new(
+		data["mass"],
+		data["physical_radius"],
+		data["name"],
+		position,
+		velocity,
+		color
+	)

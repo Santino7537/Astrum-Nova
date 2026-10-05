@@ -67,14 +67,14 @@ func _add_project_row(project_name: String, project_path: String) -> void:
 ## Abre una escena para visualizar un proyecto en un plano tridimensional.
 func _on_project_selected(_project_path: String) -> void:
 	var transition := create_tween()
-	transition.tween_property(overlay, "color:a", 1.0, 0.35)
+	transition.tween_property(overlay, "color:a", 0.8, 1.0)
 	transition.tween_callback(func() -> void:
-		GlobalSettings.current_project_path = _project_path
+		GlobalSettings.set_current_project_path(_project_path)
 		var error := get_tree().change_scene_to_file("res://Scenes/tridimentional_view.tscn")
 		if error != OK:
 			push_error("No se pudo abrir la escena tridimensional: %s" % error)
 			var fade_back := create_tween()
-			fade_back.tween_property(overlay, "color:a", 0.6, 0.2)
+			fade_back.tween_property(overlay, "color:a", 0.8, 1.0)
 	)
 
 ## Anima la abertura del menú

@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://5yn35yhwcl0b"]
+
+[ext_resource type="Script" uid="uid://bpgl5gudkugyh" path="res://Scripts/UI/Menus/Projects/SimulationScene/menu_button.gd" id="1_pm2xx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ik22"]
+bg_color = Color(0.06, 0.09, 0.16, 0.5)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.6, 0.85, 0.3)
+corner_radius_bottom_right = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pm2xx"]
+bg_color = Color(0.1, 0.16, 0.28, 0.75)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.75, 1, 0.6)
+corner_radius_bottom_right = 10
+
+[node name="MenuCanvas" type="CanvasLayer" unique_id=1176891270]
+layer = 10
+
+[node name="MenuButton" type="Button" parent="." unique_id=201157148]
+custom_minimum_size = Vector2(50, 30)
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_0ik22")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pm2xx")
+text = "Menu"
+script = ExtResource("1_pm2xx")
+
+[connection signal="pressed" from="MenuButton" to="MenuButton" method="_on_pressed"]

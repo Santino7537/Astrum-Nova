@@ -1,5 +1,7 @@
 extends Node
 
+signal selected_simulation(simulation_index: int)
+
 ## Crea una carpeta, y dentro un json que contiene un nuevo proyecto con una simulación.
 func create_project(project_name: String, simulation_name: String) -> void:
 	var file_system_path := GlobalSettings.get_file_system_path()
@@ -71,3 +73,23 @@ func create_simulation(project_path: String, simulation_name: String) -> void:
 	
 	project_file.store_string(new_content)
 	project_file.close()
+
+## Obtiene una lista de simulaciones de un proyecto
+func get_simulations(project_path: String) -> Array:
+	var project_file := FileAccess.open(project_path, FileAccess.READ)
+	if project_file == null:
+		print("No se pudo abrir el archivo.")
+		return []
+	
+	var content := project_file.get_as_text()
+	project_file.close()
+	
+	var data = JSON.parse_string(content)
+	if data == null:
+		print("El JSON no es válido.")
+		return []
+	var simulations: Array = data["simulations"]
+	return simulations
+
+func simulation_selected(simulation_index: int) -> void:
+	selected_simulation.emit(simulation_index)

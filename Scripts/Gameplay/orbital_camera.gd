@@ -47,7 +47,7 @@ func select_body(body_id: String) -> void:
 
 ## Mueve la cámara a donde la mueve el usuario
 func _update_transform() -> void:
-	var target_position := target_mesh.global_position
+	var target_position := target_mesh.global_position if is_instance_valid(target_mesh) else Vector3.ZERO
 	var horizontal_distance := distance * cos(elevation)
 	
 	camera.global_position = target_position + Vector3(
@@ -110,3 +110,6 @@ func _select_from_screen(screen_position: Vector2) -> void:
 func _process(_delta: float) -> void:
 	if is_instance_valid(target_mesh):
 		_update_transform()
+	else:
+		target_mesh = null
+		target_id = ""

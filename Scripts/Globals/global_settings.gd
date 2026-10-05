@@ -29,3 +29,9 @@ func set_file_system_path(path: String) -> void:
 
 func get_file_system_path() -> String:
 	return file_system_path
+
+func set_current_project_path(path: String) -> void:
+	current_project_path = path
+
+func get_current_project_path() -> String:
+	return current_project_path
