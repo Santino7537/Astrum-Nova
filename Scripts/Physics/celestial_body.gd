@@ -14,7 +14,7 @@ func _init(mass: float, radius: float, name: String, initial_position: Vector3 =
 	if mass <= 0.0 or radius <= 0.0:
 		push_error("Body mass and radius must be positive")
 		return
-	id = Constants.generate_id()
+	id = GlobalSimulationUtils.generate_id()
 	self.mass = mass
 	physical_radius = radius
 	position = initial_position
