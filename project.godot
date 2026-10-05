@@ -16,9 +16,10 @@ config/features=PackedStringArray("4.6", "GL Compatibility")
 
 [autoload]
 
-Constants="*uid://me2paug1et5q"
 GlobalSettings="*uid://psc365gn5fca"
 GlobalProjectUtilities="*uid://cwyr65cp76gau"
+Constants="*uid://dmrfo31lct7l5"
+GlobalSimulationUtils="*uid://c2rmt4xlbwmbb"
 
 [physics]
 
