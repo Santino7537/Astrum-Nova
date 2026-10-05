@@ -1,11 +1,8 @@
 class_name OrbitalCamera
 extends Node3D
 
-const MIN_DISTANCE: float = 0.01
-const MAX_DISTANCE: float = 2000.0
-
-@export var current_min_distance: float = MIN_DISTANCE
-@export var current_max_distance: float = MAX_DISTANCE
+@export var current_min_distance: float = 0.01
+@export var current_max_distance: float = 2000.0
 @export var zoom_factor: float = 0.85
 
 ## Que tan sensible es la cámara para moverse arrastrando el mouse
@@ -29,13 +26,13 @@ var dragging: bool = false
 func _ready() -> void:
 	camera = Camera3D.new()
 	camera.current = true
+	camera.near = 0.0005
 	add_child(camera)
 
 ## Ajusta la distancia mínima actuál de la cámara respecto al cuerpo observado.
 func _set_current_min_distance(body_radius: float) -> void:
-	if body_radius > MIN_DISTANCE:
-		current_min_distance = body_radius * 3
-		distance = current_min_distance
+	current_min_distance = body_radius / tan(deg_to_rad(camera.fov) / 4.0)
+	distance = current_min_distance
 
 ## Pone a la cámara mirando al objeto seleccionado
 func select_body(body_id: String) -> void:
@@ -103,7 +100,7 @@ func _select_from_screen(screen_position: Vector2) -> void:
 			continue
 		
 		var ray_distance := (to_body - ray_direction * along_ray).length()
-		var tolerance: float = maxf(selection_tolerance, along_ray * 0.025)
+		var tolerance: float = maxf(minf(selection_tolerance, visual.mesh.radius), along_ray * 0.025)
 		if ray_distance <= tolerance and along_ray < closest_distance:
 			closest_distance = along_ray
 			closest_id = body_id
