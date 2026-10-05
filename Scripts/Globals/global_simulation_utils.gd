@@ -58,7 +58,6 @@ func _create_body_mesh(body: CelestialBody) -> MeshInstance3D:
 	var mesh_instance := MeshInstance3D.new()
 	var sphere := SphereMesh.new()
 	var display_radius := body.physical_radius * RADIUS_SCALE
-	print(display_radius)
 	sphere.radius = display_radius
 	sphere.height = display_radius * 2.0
 	mesh_instance.mesh = sphere

@@ -20,7 +20,6 @@ var file_system_path: String = ""
 var current_project_path: String = ""
 
 func _init() -> void:
-	print(ProjectSettings.globalize_path("user://"))
 	var config := ConfigFile.new()
 	config.load(SETTINGS_PATH)
 	
