@@ -1,0 +1,408 @@
+[gd_scene format=3 uid="uid://di8ilcnu7qsib"]
+
+[ext_resource type="Theme" uid="uid://ckxp7lacnlyty" path="res://Scripts/UI/Menus/ui_theme.tres" id="1_bffo2"]
+[ext_resource type="Script" uid="uid://bev2bri6ad66q" path="res://Scripts/UI/Menus/BodyInspector/body_inspector_menu.gd" id="2_bffo2"]
+
+[sub_resource type="StyleBoxFlat" id="PanelStyle"]
+content_margin_left = 28.0
+content_margin_top = 24.0
+content_margin_right = 28.0
+content_margin_bottom = 24.0
+bg_color = Color(0.06, 0.09, 0.16, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.6, 0.85, 0.35)
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bffo2"]
+bg_color = Color(0.88, 0.93, 0.98, 0.95)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.3, 0.65, 1, 0.35)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qtu1t"]
+bg_color = Color(0.75, 0.82, 0.9, 0.95)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.2, 0.5, 0.85, 0.25)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gtnkb"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+shadow_color = Color(0.4, 0.75, 1, 0.6)
+shadow_size = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qwy1b"]
+bg_color = Color(0.06, 0.09, 0.16, 0.5)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.6, 0.85, 0.3)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t1fu4"]
+bg_color = Color(0.1, 0.16, 0.28, 0.75)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.75, 1, 0.6)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="BodyInspectorCanvas" type="CanvasLayer" unique_id=1176891270]
+layer = 10
+
+[node name="BodyInspectorMenu" type="Control" parent="." unique_id=128061715]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 832.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_bffo2")
+script = ExtResource("2_bffo2")
+
+[node name="BodyInspectorPanel" type="PanelContainer" parent="BodyInspectorMenu" unique_id=1990771612]
+custom_minimum_size = Vector2(320, 300)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -262.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("PanelStyle")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BodyInspectorMenu/BodyInspectorPanel" unique_id=351152355]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer" unique_id=1417247487]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.97, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "BODY INFORMATION"
+horizontal_alignment = 1
+
+[node name="CyanLine" type="ColorRect" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer" unique_id=2055391591]
+custom_minimum_size = Vector2(40, 2)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0.35, 0.8, 0.95, 0.9)
+
+[node name="PropertiesList" type="ScrollContainer" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer" unique_id=216861638]
+custom_minimum_size = Vector2(0, 320)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 3
+
+[node name="PropertiesRows" type="VBoxContainer" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList" unique_id=1074836352]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="NameRow" type="HBoxContainer" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows" unique_id=273033304]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NameLabel" type="Label" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/NameRow" unique_id=1887484844]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "Name"
+vertical_alignment = 1
+
+[node name="NameLineEdit" type="LineEdit" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/NameRow" unique_id=1923619181]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Kep3r-g34t"
+
+[node name="MassRow" type="HBoxContainer" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows" unique_id=836734649]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="MassLabel" type="Label" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/MassRow" unique_id=679798673]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "Mass"
+vertical_alignment = 1
+
+[node name="MassLineEdit" type="LineEdit" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/MassRow" unique_id=131252376]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "1.56e10"
+
+[node name="RadiusRow" type="HBoxContainer" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows" unique_id=2057653202]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="RadiusLabel" type="Label" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/RadiusRow" unique_id=703221129]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "Radius"
+vertical_alignment = 1
+
+[node name="RadiusLineEdit" type="LineEdit" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/RadiusRow" unique_id=1466452318]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "1.56e4"
+
+[node name="ColorRow" type="HBoxContainer" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows" unique_id=983112646]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ColorLabel" type="Label" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/ColorRow" unique_id=2038945641]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "Color"
+vertical_alignment = 1
+
+[node name="ColorLineEdit" type="LineEdit" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/ColorRow" unique_id=692886293]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "f3ab12"
+
+[node name="CyanLine" type="ColorRect" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows" unique_id=1574579789]
+custom_minimum_size = Vector2(40, 2)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0.35, 0.8, 0.95, 0.9)
+
+[node name="Spacer" type="Control" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows" unique_id=131840626]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VelocityXRow" type="HBoxContainer" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows" unique_id=1002954809]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="VelocityXLabel" type="Label" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/VelocityXRow" unique_id=1637529022]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "Velocity X"
+vertical_alignment = 1
+
+[node name="VelocityXLineEdit" type="LineEdit" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/VelocityXRow" unique_id=1750557757]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VelocityYRow" type="HBoxContainer" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows" unique_id=80168403]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="VelocityYLabel" type="Label" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/VelocityYRow" unique_id=1052771702]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "Velocity Y"
+vertical_alignment = 1
+
+[node name="VelocityYLineEdit" type="LineEdit" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/VelocityYRow" unique_id=2109133704]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VelocityZRow" type="HBoxContainer" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows" unique_id=770742006]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="VelocityZLabel" type="Label" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/VelocityZRow" unique_id=1928831655]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "Velocity Z"
+vertical_alignment = 1
+
+[node name="VelocityZLineEdit" type="LineEdit" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/VelocityZRow" unique_id=1076031965]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PositionXRow" type="HBoxContainer" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows" unique_id=231551686]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PositionXLabel" type="Label" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/PositionXRow" unique_id=1204398932]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "Position X"
+vertical_alignment = 1
+
+[node name="PositionXLineEdit" type="LineEdit" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/PositionXRow" unique_id=371447197]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PositionYRow" type="HBoxContainer" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows" unique_id=1511509261]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PositionYLabel" type="Label" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/PositionYRow" unique_id=775080164]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "Position Y"
+vertical_alignment = 1
+
+[node name="PositionYLineEdit" type="LineEdit" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/PositionYRow" unique_id=1911987938]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PositionZRow" type="HBoxContainer" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows" unique_id=516066518]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PositionZLabel" type="Label" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/PositionZRow" unique_id=909968224]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "Position Z"
+vertical_alignment = 1
+
+[node name="PositionZLineEdit" type="LineEdit" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/PositionZRow" unique_id=1023252973]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CyanLine2" type="ColorRect" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows" unique_id=1603776681]
+custom_minimum_size = Vector2(40, 2)
+layout_mode = 2
+size_flags_horizontal = 4
+color = Color(0.35, 0.8, 0.95, 0.9)
+
+[node name="Spacer2" type="Control" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows" unique_id=1482267706]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MassUnitRow" type="HBoxContainer" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows" unique_id=941061332]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="MassUnitLabel" type="Label" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/MassUnitRow" unique_id=650579785]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "Mass Unit"
+vertical_alignment = 1
+
+[node name="MassUnitOptionButton" type="OptionButton" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/MassUnitRow" unique_id=547076845]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LengthUnitRow" type="HBoxContainer" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows" unique_id=1028567902]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="LengthUnitLabel" type="Label" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/LengthUnitRow" unique_id=491183220]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "Length Unit
+"
+vertical_alignment = 1
+
+[node name="LengthUnitOptionButton" type="OptionButton" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/LengthUnitRow" unique_id=1933013895]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VelocityUnitRow" type="HBoxContainer" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows" unique_id=1952089098]
+auto_translate_mode = 2
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="VelocityUnitLabel" type="Label" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/VelocityUnitRow" unique_id=2061949769]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+text = "Velocity Unit
+"
+vertical_alignment = 1
+
+[node name="VelocityUnitOptionButton" type="OptionButton" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/VelocityUnitRow" unique_id=1147473694]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Actions" type="HBoxContainer" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer" unique_id=1370208761]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="DeleteButton" type="Button" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/Actions" unique_id=2091802002]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.04, 0.07, 0.12, 1)
+theme_override_colors/font_pressed_color = Color(0.04, 0.07, 0.12, 1)
+theme_override_colors/font_hover_color = Color(0.9490196, 0.4509804, 0.5019608, 1)
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_bffo2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qtu1t")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gtnkb")
+text = "Delete Body"
+
+[node name="CloseButton" type="Button" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/Actions" unique_id=731321217]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_qwy1b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_t1fu4")
+text = "Close"
+
+[node name="Spacer" type="Control" parent="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer" unique_id=1559049344]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[connection signal="text_submitted" from="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/NameRow/NameLineEdit" to="BodyInspectorMenu" method="_on_name_line_edit_text_submitted"]
+[connection signal="text_submitted" from="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/MassRow/MassLineEdit" to="BodyInspectorMenu" method="_on_mass_line_edit_text_submitted"]
+[connection signal="text_submitted" from="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/RadiusRow/RadiusLineEdit" to="BodyInspectorMenu" method="_on_radius_line_edit_text_submitted"]
+[connection signal="text_submitted" from="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/ColorRow/ColorLineEdit" to="BodyInspectorMenu" method="_on_color_line_edit_text_submitted"]
+[connection signal="text_submitted" from="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/VelocityXRow/VelocityXLineEdit" to="BodyInspectorMenu" method="_on_velocity_x_line_edit_submitted"]
+[connection signal="text_submitted" from="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/VelocityYRow/VelocityYLineEdit" to="BodyInspectorMenu" method="_on_velocity_y_line_edit_submitted"]
+[connection signal="text_submitted" from="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/VelocityZRow/VelocityZLineEdit" to="BodyInspectorMenu" method="_on_velocity_z_line_edit_submitted"]
+[connection signal="text_submitted" from="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/PositionXRow/PositionXLineEdit" to="BodyInspectorMenu" method="_on_position_x_line_edit_submitted"]
+[connection signal="text_submitted" from="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/PositionYRow/PositionYLineEdit" to="BodyInspectorMenu" method="_on_position_y_line_edit_submitted"]
+[connection signal="text_submitted" from="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/PositionZRow/PositionZLineEdit" to="BodyInspectorMenu" method="_on_position_z_line_edit_submitted"]
+[connection signal="item_selected" from="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/MassUnitRow/MassUnitOptionButton" to="BodyInspectorMenu" method="_on_mass_unit_selected"]
+[connection signal="item_selected" from="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/LengthUnitRow/LengthUnitOptionButton" to="BodyInspectorMenu" method="_on_length_unit_selected"]
+[connection signal="item_selected" from="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/PropertiesList/PropertiesRows/VelocityUnitRow/VelocityUnitOptionButton" to="BodyInspectorMenu" method="_on_velocity_unit_selected"]
+[connection signal="pressed" from="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/Actions/DeleteButton" to="BodyInspectorMenu" method="_on_delete_pressed"]
+[connection signal="pressed" from="BodyInspectorMenu/BodyInspectorPanel/VBoxContainer/Actions/CloseButton" to="BodyInspectorMenu" method="_on_close_pressed"]
