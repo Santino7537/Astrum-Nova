@@ -10,11 +10,11 @@ var acceleration: Vector3 = Vector3.ZERO
 var name: String
 var color: Color
 
-func _init(mass: float, radius: float, name: String, initial_position: Vector3 = Vector3.ZERO, initial_velocity: Vector3 = Vector3.ZERO, color: Color = Color.WHITE) -> void:
+func _init(mass: float, radius: float, name: String, initial_position: Vector3 = Vector3.ZERO, initial_velocity: Vector3 = Vector3.ZERO, color: Color = Color.WHITE, id: String = GlobalSimulationUtils.generate_id()) -> void:
 	if mass <= 0.0 or radius <= 0.0:
 		push_error("Body mass and radius must be positive")
 		return
-	id = GlobalSimulationUtils.generate_id()
+	self.id = id
 	self.mass = mass
 	physical_radius = radius
 	position = initial_position
@@ -43,5 +43,6 @@ static func dictionary_to_celestial_body(data: Dictionary) -> CelestialBody:
 		data["name"],
 		position,
 		velocity,
-		color
+		color,
+		data["id"]
 	)

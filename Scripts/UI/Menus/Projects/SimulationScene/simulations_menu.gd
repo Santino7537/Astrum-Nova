@@ -9,6 +9,7 @@ const SimulationRow := preload("res://Scripts/UI/Menus/Projects/SimulationScene/
 @onready var overlay: ColorRect = $"../Overlay"
 
 func _ready() -> void:
+	GlobalProjectUtilities.selected_simulation.connect(_on_simulation_selected)
 	_add_rows()
 	_animate_in()
 
@@ -24,7 +25,6 @@ func _add_rows() -> void:
 func _add_simulation_row(simulation_name: String, simulation_index: int) -> void:
 	var row: SimulationRow = SIMULATION_ROW_SCENE.instantiate()
 	row.configure(simulation_name, simulation_index)
-	GlobalProjectUtilities.selected_simulation.connect(_on_simulation_selected)
 	simulation_rows.add_child(row)
 
 func _on_simulation_selected(_index: int) -> void:
@@ -81,6 +81,7 @@ func _on_exit_pressed() -> void:
 	var transition := create_tween()
 	transition.tween_property(overlay, "color:a", 0.8, 1.0)
 	transition.tween_callback(func() -> void:
+		GlobalProjectUtilities.set_simulation_index(0)
 		var error := get_tree().change_scene_to_file("res://Scripts/UI/Menus/main_menu.tscn")
 		if error != OK:
 			push_error("No se pudo abrir el menú principal: %s" % error)

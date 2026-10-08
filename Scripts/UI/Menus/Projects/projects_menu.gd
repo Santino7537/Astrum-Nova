@@ -17,7 +17,7 @@ func _ready() -> void:
 ## Agrega filas en el menú, las cuales te permiten abrir proyectos.
 func _add_rows() -> void:
 	var root_path := GlobalSettings.get_file_system_path()
-	var projects := _find_projects(root_path) if not root_path.is_empty() else []
+	var projects: Array = _find_projects(root_path) if not root_path.is_empty() else []
 	projects_list.visible = not projects.is_empty()
 	empty_state.visible = projects.is_empty()
 	

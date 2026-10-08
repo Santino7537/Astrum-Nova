@@ -5,21 +5,15 @@ extends RefCounted
 var G: float = Constants.Gravity
 ## Utilizado para no hacer división por 0 en ciertos casos
 var softening_length: float
-## Paso temporal de la simulación (en segundos)
-var fixed_delta: float
-## Tiempo de la simulación (en segundos)
-var simulation_time: float = 0.0
 ## Guarda las coliciones
 var collision_events: Array[Dictionary] = []
 ## Bandera para saber si se aplicaron las aceleraciones de los cuerpos
 var _accelerations_ready := false
 
-func _init(delta_seconds: float = 3600.0, softening: float = 1.0e6) -> void:
-	if delta_seconds <= 0.0 or softening < 0.0:
-		push_error("Delta and softening must be valid; using default values")
-		delta_seconds = 3600.0
+func _init(softening: float = 1.0e6) -> void:
+	if softening < 0.0:
+		push_error("Softening must be valid; using default values")
 		softening = 1.0e6
-	fixed_delta = delta_seconds
 	softening_length = softening
 
 ## Calcula la aceleración de todos los cuerpos
@@ -45,7 +39,7 @@ func calculate_accelerations() -> Array[Vector3]:
 	return accelerations
 
 ## Hace los cálculos de aceleración, velocidad y paso para mover los cuerpos
-func step(delta_seconds: float = fixed_delta) -> Array[Dictionary]:
+func step(delta_seconds: float) -> Array[Dictionary]:
 	if delta_seconds <= 0.0:
 		push_error("Physics delta must be positive")
 		return []
@@ -65,7 +59,7 @@ func step(delta_seconds: float = fixed_delta) -> Array[Dictionary]:
 		var body := GlobalSimulationUtils.get_body_by_index(body_index)
 		body.velocity += new_accelerations[body_index] * (delta_seconds * 0.5)
 		body.acceleration = new_accelerations[body_index]
-	simulation_time += delta_seconds
+	GlobalSimulationUtils.set_simulation_time(GlobalSimulationUtils.get_simulation_time() + delta_seconds)
 	collision_events = _resolve_collisions()
 	return collision_events
 
@@ -100,7 +94,7 @@ func _resolve_collisions() -> Array[Dictionary]:
 		GlobalSimulationUtils.remove_body(second_id)
 		GlobalSimulationUtils.add_body(merged)
 		
-		events.append({"removed_ids": [first_id, second_id], "new_id": merged.id, "time": simulation_time})
+		events.append({"removed_ids": [first_id, second_id], "new_id": merged.id, "time": GlobalSimulationUtils.get_simulation_time()})
 	_accelerations_ready = false
 	return events
 

@@ -1,6 +1,8 @@
 class_name OrbitalCamera
 extends Node3D
 
+signal selected_body(body_id: String)
+
 @export var current_min_distance: float = 0.01
 @export var current_max_distance: float = 2000.0
 @export var zoom_factor: float = 0.85
@@ -39,6 +41,7 @@ func select_body(body_id: String) -> void:
 	if !GlobalSimulationUtils.has_existing_body(body_id):
 		return
 	target_id = body_id
+	selected_body.emit(target_id)
 	target_mesh = GlobalSimulationUtils.get_body_mesh(body_id)
 	
 	var body_radius := GlobalSimulationUtils.get_body_by_id(body_id).physical_radius
@@ -69,15 +72,21 @@ func _unhandled_input(event: InputEvent) -> void:
 			dragging = event.pressed
 			if dragging:
 				_select_from_screen(event.position)
-		elif event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			_zoom(zoom_factor)
-		elif event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			_zoom(1.0 / zoom_factor)
+		elif event.pressed and not is_mouse_over_ui():
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+				_zoom(zoom_factor)
+			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+				_zoom(1.0 / zoom_factor)
 	
 	elif event is InputEventMouseMotion and dragging:
 		azimuth -= event.relative.x * orbit_sensitivity
 		elevation = clamp(elevation + event.relative.y * orbit_sensitivity, -1.45, 1.45)
 		_update_transform()
+
+## Revisa si el mouse está encima de algún menú
+func is_mouse_over_ui() -> bool:
+	var gui := get_viewport().gui_get_hovered_control()
+	return gui != null
 
 ## Revisa si algún cuerpo fue seleccionado por el usuario
 func _select_from_screen(screen_position: Vector2) -> void:
@@ -110,6 +119,7 @@ func _select_from_screen(screen_position: Vector2) -> void:
 func _process(_delta: float) -> void:
 	if is_instance_valid(target_mesh):
 		_update_transform()
-	else:
+	elif !target_id.is_empty():
 		target_mesh = null
 		target_id = ""
+		selected_body.emit(target_id)

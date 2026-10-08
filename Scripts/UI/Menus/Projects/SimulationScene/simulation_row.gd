@@ -10,7 +10,6 @@ func configure(row_simulation_name: String, row_simulation_index: int) -> void:
 func _ready() -> void:
 	alignment = HORIZONTAL_ALIGNMENT_LEFT
 	text = simulation_name
-	pressed.connect(_on_pressed)
 
 func _on_pressed() -> void:
-	GlobalProjectUtilities.simulation_selected(simulation_index)
+	GlobalProjectUtilities.set_simulation_index(simulation_index)

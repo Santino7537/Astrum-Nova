@@ -100,7 +100,7 @@ corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
 [node name="SimulationsCanvas" type="CanvasLayer" unique_id=1176891270]
-layer = 10
+layer = 12
 
 [node name="Overlay" type="ColorRect" parent="." unique_id=322778656]
 anchors_preset = 15
