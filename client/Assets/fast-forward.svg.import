@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dbhex3kdol016"
-path="res://.godot/imported/rewind.svg-5f63e78a3afabc2c6625a60bf6d80291.ctex"
+uid="uid://krnsn31wsqhg"
+path="res://.godot/imported/fast-forward.svg-fc87bdaec3c3505186dcba5cc3129ff2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scripts/UI/Assets/rewind.svg"
-dest_files=["res://.godot/imported/rewind.svg-5f63e78a3afabc2c6625a60bf6d80291.ctex"]
+source_file="res://Assets/fast-forward.svg"
+dest_files=["res://.godot/imported/fast-forward.svg-fc87bdaec3c3505186dcba5cc3129ff2.ctex"]
 
 [params]
 

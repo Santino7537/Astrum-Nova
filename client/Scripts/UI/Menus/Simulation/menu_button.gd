@@ -1,6 +1,6 @@
 extends Button
 
-const SIMULATIONS_MENU_SCENE := preload("res://Scripts/UI/Menus/Projects/SimulationScene/simulations_menu.tscn")
+const SIMULATIONS_MENU_SCENE := preload("res://Scenes/UI/Menus/Simulation/simulations_menu.tscn")
 
 func _on_pressed() -> void:
 	var root := get_tree().current_scene

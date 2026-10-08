@@ -1,7 +1,7 @@
 extends Control
 
-const SIMULATION_ROW_SCENE := preload("res://Scripts/UI/Menus/Projects/SimulationScene/simulation_row.tscn")
-const SimulationRow := preload("res://Scripts/UI/Menus/Projects/SimulationScene/simulation_row.gd")
+const SIMULATION_ROW_SCENE := preload("res://Scenes/UI/Menus/Simulation/simulation_row.tscn")
+const SimulationRow := preload("res://Scripts/UI/Menus/Simulation/simulation_row.gd")
 
 @onready var simulations_panel: PanelContainer = $SimulationsPanel
 @onready var simulation_rows: VBoxContainer = $SimulationsPanel/VBoxContainer/SimulationsList/SimulationsRows
@@ -82,7 +82,7 @@ func _on_exit_pressed() -> void:
 	transition.tween_property(overlay, "color:a", 0.8, 1.0)
 	transition.tween_callback(func() -> void:
 		GlobalProjectUtilities.set_simulation_index(0)
-		var error := get_tree().change_scene_to_file("res://Scripts/UI/Menus/main_menu.tscn")
+		var error := get_tree().change_scene_to_file("res://Scenes/UI/Menus/Main/main_menu.tscn")
 		if error != OK:
 			push_error("No se pudo abrir el menú principal: %s" % error)
 			var fade_back := create_tween()

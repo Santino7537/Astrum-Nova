@@ -1,9 +1,9 @@
 extends Control
 
-const SETTINGS_MENU_SCENE := preload("res://Scripts/UI/Menus/Settings/settings_menu.tscn")
-const PROJECTS_MENU_SCENE := preload("res://Scripts/UI/Menus/Projects/projects_menu.tscn")
-const PROJECT_CREATION_MENU_SCENE := preload("res://Scripts/UI/Menus/Projects/project_creation_menu.tscn")
-const CONNECT_MENU_SCENE := preload("res://Scenes/UI/connect_menu.tscn")
+const SETTINGS_MENU_SCENE := preload("res://Scenes/UI/Menus/Main/settings_menu.tscn")
+const PROJECTS_MENU_SCENE := preload("res://Scenes/UI/Menus/Main/projects_menu.tscn")
+const PROJECT_CREATION_MENU_SCENE := preload("res://Scenes/UI/Menus/Main/project_creation_menu.tscn")
+const CONNECT_MENU_SCENE := preload("res://Scenes/UI/Menus/Main/connect_menu.tscn")
 
 func _on_create_sim_pressed() -> void:
 	var root := get_tree().current_scene

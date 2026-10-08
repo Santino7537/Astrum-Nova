@@ -5,8 +5,8 @@ extends Control
 @onready var simulation_speed_line: LineEdit = $SimulationControlPanel/VBoxContainer/TimeRow/SimulationSpeedLine
 @onready var create_body_button: Button = $SimulationControlPanel/VBoxContainer/BodyRow/CreateButton
 
-var icon_play = preload("res://Scripts/UI/Assets/play.svg")
-var icon_pause = preload("res://Scripts/UI/Assets/pause.svg")
+var icon_play = preload("res://Assets/play.svg")
+var icon_pause = preload("res://Assets/pause.svg")
 
 var simulation_date_time_unix: int
 

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://2kxgsalixmxp"]
 
-[ext_resource type="Script" uid="uid://l1al4qmu1wht" path="res://Scripts/UI/Menus/main_menu.gd" id="1_28flt"]
-[ext_resource type="Theme" uid="uid://ckxp7lacnlyty" path="res://Scripts/UI/Menus/ui_theme.tres" id="2_theme"]
+[ext_resource type="Theme" uid="uid://ckxp7lacnlyty" path="res://Assets/ui_theme.tres" id="1_n2igu"]
+[ext_resource type="Script" uid="uid://l1al4qmu1wht" path="res://Scripts/UI/Menus/Main/main_menu.gd" id="2_x3p7v"]
 
 [sub_resource type="Gradient" id="Gradient_bg"]
 colors = PackedColorArray(0.01, 0.02, 0.04, 1, 0.06, 0.09, 0.16, 1)
@@ -76,8 +76,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("2_theme")
-script = ExtResource("1_28flt")
+theme = ExtResource("1_n2igu")
+script = ExtResource("2_x3p7v")
 
 [node name="Background" type="TextureRect" parent="." unique_id=2064389045]
 layout_mode = 1
