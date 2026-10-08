@@ -139,6 +139,7 @@ func _on_velocity_unit_selected(index: int) -> void:
 	update_values()
 
 func _on_delete_pressed() -> void:
+	GlobalProjectUtilities.delete_body(GlobalSettings.get_current_project_path(), GlobalProjectUtilities.get_simulation_index(), body_id)
 	GlobalSimulationUtils.remove_body(body_id)
 	_on_close_pressed()
 

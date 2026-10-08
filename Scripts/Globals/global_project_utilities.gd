@@ -92,12 +92,15 @@ func _set_nested_value(data: Variant, path: Array, value: Variant, append_value:
 		current[final_key] = value
 	else:
 		if current is Dictionary:
-			current[final_key] = value
+			if current[final_key] is Array:
+				current[final_key].append(value)
+			else:
+				current[final_key] = value
 		elif current is Array:
-			current.append(value)
+			current[final_key].append(value)
 
 ## Modifica un campo de un proyecto
-func _modify_proyect(project_path: String, simulation_index: int, path: Array, value: Variant, append_value: bool = false) -> void:
+func _modify_proyect(project_path: String, path: Array, value: Variant, append_value: bool = false) -> void:
 	var data := _obtain_json_file_content(project_path)
 	if data == {}:
 		return
@@ -111,13 +114,28 @@ func _modify_proyect(project_path: String, simulation_index: int, path: Array, v
 ## Crea una simulación dentro de un proyecto
 func create_simulation(project_path: String, simulation_name: String) -> void:
 	var path: Array = ["simulations"]
-	var simulation := {
+	var simulation: Array[Dictionary] = [{
 		"simulation_name": simulation_name,
 		"start_date": Time.get_datetime_string_from_system(false, true),
 		"celestial_bodies": []
+	}]
+	
+	_modify_proyect(project_path, path, simulation, true)
+
+## Crea un cuerpo celeste en una simulación
+func create_body(project_path: String, simulation_index: int, body: CelestialBody) -> void:
+	var path: Array = ["simulations", simulation_index, "celestial_bodies"]
+	var body_dict: Dictionary = {
+		"color": body.color.to_html(),
+		"id": body.id,
+		"mass": body.mass,
+		"name": body.name,
+		"physical_radius": body.physical_radius,
+		"position": [body.position.x, body.position.y, body.position.z],
+		"velocity": [body.velocity.x, body.velocity.y, body.velocity.z]
 	}
 	
-	_modify_proyect(project_path, simulation_index, path, simulation, true)
+	_modify_proyect(project_path, path, body_dict, true)
 
 ## Obtiene una lista de simulaciones de un proyecto
 func get_simulations(project_path: String) -> Array:
@@ -152,6 +170,24 @@ func modify_body(project_path: String, simulation_index: int, body_id: String, n
 	
 	GlobalSimulationUtils.set_auxiliar_selected_body(body_id)
 	changed_body.emit(simulation_index)
+
+func delete_body(project_path: String, simulation_index: int, body_id: String) -> void:
+	var data := _obtain_json_file_content(project_path)
+	var bodies = data["simulations"][simulation_index]["celestial_bodies"]
+	var deleted_body: bool = false
+	
+	for body in bodies:
+		if body.id == body_id:
+			bodies.erase(body)
+			deleted_body = true
+			break
+	
+	if !deleted_body:
+		print("No existe el cuerpo con ID " + body_id)
+		return
+	
+	var new_content := JSON.stringify(data, "\t")
+	_write_json_file(project_path, new_content)
 
 func modify_simulation(project_path: String, simulation_index: int, new_value: String, field_name: String) -> void:
 	var data := _obtain_json_file_content(project_path)

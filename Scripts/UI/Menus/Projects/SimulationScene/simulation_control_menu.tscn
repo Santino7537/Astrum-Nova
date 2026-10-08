@@ -206,3 +206,4 @@ alignment = 2
 [connection signal="text_submitted" from="SimulationControlMenu/SimulationControlPanel/VBoxContainer/TimeRow/DateTimeLine" to="SimulationControlMenu" method="_on_date_time_line_submitted"]
 [connection signal="pressed" from="SimulationControlMenu/SimulationControlPanel/VBoxContainer/TimeRow/SlowDownButton" to="SimulationControlMenu" method="_on_slow_down_pressed"]
 [connection signal="pressed" from="SimulationControlMenu/SimulationControlPanel/VBoxContainer/TimeRow/SpeedUpButton" to="SimulationControlMenu" method="_on_speed_up_pressed"]
+[connection signal="pressed" from="SimulationControlMenu/SimulationControlPanel/VBoxContainer/BodyRow/CreateButton" to="SimulationControlMenu" method="_on_create_pressed"]

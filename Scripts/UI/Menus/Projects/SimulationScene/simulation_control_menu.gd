@@ -44,11 +44,18 @@ func _on_pause_pressed() -> void:
 func _on_restart_pressed() -> void:
 	GlobalProjectUtilities.set_simulation_index(GlobalProjectUtilities.get_simulation_index())
 
+func _on_date_time_line_submitted(new_text: String) -> void:
+	GlobalProjectUtilities.modify_simulation(GlobalSettings.get_current_project_path(), GlobalProjectUtilities.get_simulation_index(), new_text, "start_date")
+
 func _on_slow_down_pressed() -> void:
 	GlobalSimulationUtils.set_playback_speed(GlobalSimulationUtils.get_playback_speed() / 2)
 
 func _on_speed_up_pressed() -> void:
 	GlobalSimulationUtils.set_playback_speed(GlobalSimulationUtils.get_playback_speed() * 2)
 
-func _on_date_time_line_submitted(new_text: String) -> void:
-	GlobalProjectUtilities.modify_simulation(GlobalSettings.get_current_project_path(), GlobalProjectUtilities.get_simulation_index(), new_text, "start_date")
+func _on_create_pressed() -> void:
+	var body: CelestialBody = CelestialBody.new(randi(), randi_range(1e6, 1e7), GlobalSimulationUtils.generate_id(), Vector3(randi_range(-1e10, 1e10), randi_range(-1e10, 1e10), randi_range(-1e10, 1e10)))
+	GlobalProjectUtilities.create_body(GlobalSettings.get_current_project_path(), GlobalProjectUtilities.get_simulation_index(), body)
+	GlobalSimulationUtils.set_auxiliar_selected_body(body.id)
+	GlobalSimulationUtils.add_body(body)
+	_on_restart_pressed()
