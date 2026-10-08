@@ -20,6 +20,7 @@ GlobalSettings="*uid://psc365gn5fca"
 GlobalProjectUtilities="*uid://cwyr65cp76gau"
 Constants="*uid://dmrfo31lct7l5"
 GlobalSimulationUtils="*uid://c2rmt4xlbwmbb"
+NetworkClient="*res://Scripts/Globals/network_client.gd"
 
 [physics]
 

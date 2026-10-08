@@ -77,6 +77,24 @@ func _write_json_file(project_path: String, new_content: String) -> void:
 	
 	project_file.store_string(new_content)
 	project_file.close()
+	_sync_project_to_server(project_path, new_content)
+
+func _sync_project_to_server(project_path: String, project_content: String) -> void:
+	if not NetworkClient.connected:
+		return
+	var project: Variant = JSON.parse_string(project_content)
+	if not project is Dictionary:
+		push_error("No se pudo sincronizar el proyecto: el JSON no es válido.")
+		return
+	var project_name := str(project.get("project_name", ""))
+	if project_name.is_empty():
+		push_error("No se pudo sincronizar el proyecto: falta el nombre.")
+		return
+	if not NetworkClient.is_project_remote(project_name):
+		return
+	var response: Dictionary = await NetworkClient.save_project(project_name, project)
+	if not response.get("ok", false):
+		push_error("No se pudo sincronizar el proyecto con el servidor: %s" % response.get("error", "Error desconocido."))
 
 ## Modifica valores dentro de datos compuestos
 func _set_nested_value(data: Variant, path: Array, value: Variant, append_value: bool) -> void:
@@ -114,11 +132,11 @@ func _modify_proyect(project_path: String, path: Array, value: Variant, append_v
 ## Crea una simulación dentro de un proyecto
 func create_simulation(project_path: String, simulation_name: String) -> void:
 	var path: Array = ["simulations"]
-	var simulation: Array[Dictionary] = [{
+	var simulation: Dictionary = {
 		"simulation_name": simulation_name,
 		"start_date": Time.get_datetime_string_from_system(false, true),
 		"celestial_bodies": []
-	}]
+	}
 	
 	_modify_proyect(project_path, path, simulation, true)
 

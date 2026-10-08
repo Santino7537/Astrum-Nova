@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dleep26pls3v3"]
 
-[ext_resource type="Theme" uid="uid://ckxp7lacnlyty" path="res://Scripts/UI/Menus/ui_theme.tres" id="1_g8mgt"]
-[ext_resource type="Script" uid="uid://bkriatg7wyedt" path="res://Scripts/UI/Menus/connect_menu.gd" id="2_g8mgt"]
+[ext_resource type="Theme" uid="uid://ckxp7lacnlyty" path="res://Assets/ui_theme.tres" id="1_g8mgt"]
+[ext_resource type="Script" uid="uid://bkriatg7wyedt" path="res://Scripts/UI/Menus/Main/connect_menu.gd" id="2_g8mgt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qdj6"]
 content_margin_left = 28.0
@@ -135,13 +135,13 @@ theme_override_constants/separation = 12
 layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
 theme_override_font_sizes/font_size = 13
-text = "Server IP "
+text = "Server "
 vertical_alignment = 1
 
 [node name="ServerLineEdit" type="LineEdit" parent="ConnectMenu/ConnectPanel/VBoxContainer/ServerRow" unique_id=1975532362]
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "xxx.xxx.xxx.xxx"
+placeholder_text = "IP o host (opcional: puerto)"
 
 [node name="PasswordRow" type="HBoxContainer" parent="ConnectMenu/ConnectPanel/VBoxContainer" unique_id=1411575802]
 auto_translate_mode = 2
