@@ -152,3 +152,10 @@ func modify_body(project_path: String, simulation_index: int, body_id: String, n
 	
 	GlobalSimulationUtils.set_auxiliar_selected_body(body_id)
 	changed_body.emit(simulation_index)
+
+func modify_simulation(project_path: String, simulation_index: int, new_value: String, field_name: String) -> void:
+	var data := _obtain_json_file_content(project_path)
+	data["simulations"][simulation_index][field_name] = new_value
+	
+	var new_content := JSON.stringify(data, "\t")
+	_write_json_file(project_path, new_content)
