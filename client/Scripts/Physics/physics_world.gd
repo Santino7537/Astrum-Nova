@@ -1,41 +1,88 @@
 class_name PhysicsWorld
 extends RefCounted
 
+const PARALLEL_MINIMUM_BODY_COUNT := 64
+
 ## Constante gravitatoria
 var G: float = Constants.Gravity
 ## Utilizado para no hacer división por 0 en ciertos casos
 var softening_length: float
+## Máximo de workers para aceleraciones; 0 desactiva el paralelismo
+var max_worker_threads: int
 ## Guarda las coliciones
 var collision_events: Array[Dictionary] = []
 ## Bandera para saber si se aplicaron las aceleraciones de los cuerpos
 var _accelerations_ready := false
 
-func _init(softening: float = 1.0e6) -> void:
+func _init(softening: float = 1.0e6, max_worker_threads: int = 4) -> void:
 	if softening < 0.0:
 		push_error("Softening must be valid; using default values")
 		softening = 1.0e6
 	softening_length = softening
+	self.max_worker_threads = maxi(max_worker_threads, 0)
 
 ## Calcula la aceleración de todos los cuerpos
 func calculate_accelerations() -> Array[Vector3]:
-	## Aceleración de cada cuerpo
-	var accelerations: Array[Vector3] = []
-	var bodies_size := GlobalSimulationUtils.get_bodies().size()
-	accelerations.resize(bodies_size)
-	
+	var bodies := GlobalSimulationUtils.get_bodies()
+	var bodies_size := bodies.size()
+	var positions: Array[Vector3] = []
+	var masses: Array[float] = []
+	positions.resize(bodies_size)
+	masses.resize(bodies_size)
 	for body_index in bodies_size:
-		accelerations[body_index] = Vector3.ZERO
-	
-	for first_index in range(bodies_size):
-		for second_index in range(first_index + 1, bodies_size):
-			var first: CelestialBody = GlobalSimulationUtils.get_body_by_index(first_index)
-			var second: CelestialBody = GlobalSimulationUtils.get_body_by_index(second_index)
-			var offset := second.position - first.position
+		positions[body_index] = bodies[body_index].position
+		masses[body_index] = bodies[body_index].mass
+
+	var worker_count := mini(max_worker_threads, mini(maxi(OS.get_processor_count(), 1), bodies_size))
+	if bodies_size < PARALLEL_MINIMUM_BODY_COUNT or worker_count < 2:
+		return _calculate_acceleration_range(0, bodies_size, positions, masses)
+
+	var acceleration_chunks: Array = []
+	acceleration_chunks.resize(worker_count)
+	var results_mutex := Mutex.new()
+	var task_id := WorkerThreadPool.add_group_task(
+		_calculate_acceleration_chunk.bind(positions, masses, acceleration_chunks, results_mutex),
+		worker_count,
+		worker_count,
+		false,
+		"Calculating celestial body accelerations"
+	)
+	if task_id < 0:
+		push_error("Failed to schedule parallel acceleration calculation; using the main thread")
+		return _calculate_acceleration_range(0, bodies_size, positions, masses)
+	WorkerThreadPool.wait_for_group_task_completion(task_id)
+
+	var accelerations: Array[Vector3] = []
+	accelerations.resize(bodies_size)
+	var acceleration_index := 0
+	for chunk_variant in acceleration_chunks:
+		var chunk: Array = chunk_variant
+		for acceleration in chunk:
+			accelerations[acceleration_index] = acceleration
+			acceleration_index += 1
+	return accelerations
+
+func _calculate_acceleration_chunk(worker_index: int, positions: Array[Vector3], masses: Array[float], acceleration_chunks: Array, results_mutex: Mutex) -> void:
+	var start_index := int(positions.size() * worker_index / acceleration_chunks.size())
+	var end_index := int(positions.size() * (worker_index + 1) / acceleration_chunks.size())
+	var chunk := _calculate_acceleration_range(start_index, end_index, positions, masses)
+	results_mutex.lock()
+	acceleration_chunks[worker_index] = chunk
+	results_mutex.unlock()
+
+func _calculate_acceleration_range(start_index: int, end_index: int, positions: Array[Vector3], masses: Array[float]) -> Array[Vector3]:
+	var accelerations: Array[Vector3] = []
+	accelerations.resize(end_index - start_index)
+	for body_index in range(start_index, end_index):
+		var acceleration := Vector3.ZERO
+		for source_index in positions.size():
+			if source_index == body_index:
+				continue
+			var offset := positions[source_index] - positions[body_index]
 			var distance_squared := offset.length_squared() + softening_length * softening_length
 			var scale := G / pow(distance_squared, 1.5)
-			
-			accelerations[first_index] += offset * (second.mass * scale)
-			accelerations[second_index] -= offset * (first.mass * scale)
+			acceleration += offset * (masses[source_index] * scale)
+		accelerations[body_index - start_index] = acceleration
 	return accelerations
 
 ## Hace los cálculos de aceleración, velocidad y paso para mover los cuerpos

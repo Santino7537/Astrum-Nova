@@ -3,6 +3,7 @@ extends Node3D
 const MENU_BUTTON_SCENE := preload("res://Scenes/UI/Menus/Simulation/menu_button.tscn")
 const SIMULATION_CONTROL_SCENE := preload("res://Scenes/UI/Menus/Simulation/simulation_control_menu.tscn")
 const BODY_INSPECTOR_SCENE := preload("res://Scenes/UI/Menus/Simulation/body_inspector_menu.tscn")
+const MAX_PHYSICS_WORKER_THREADS := 4
 
 var world: PhysicsWorld
 var orbital_camera: OrbitalCamera
@@ -49,7 +50,7 @@ func _setup_scene() -> void:
 	add_child(orbital_camera)
 	orbital_camera.selected_body.connect(_update_body_inspector)
 	
-	world = PhysicsWorld.new(1.0e3)
+	world = PhysicsWorld.new(1.0e3, MAX_PHYSICS_WORKER_THREADS)
 
 func _update_body_inspector(body_id: String) -> void:
 	var root := get_tree().current_scene
