@@ -1,11 +1,14 @@
 extends Node
 
 const STAR_AURA_SHADER := preload("res://Shaders/star_aura.gdshader")
+const PLANET_SURFACE_SHADER := preload("res://Shaders/planet_surface.gdshader")
+const STAR_SURFACE_SHADER := preload("res://Shaders/star_surface.gdshader")
 const WORLD_UNITS_PER_AU := 400.0
 const STAR_LIGHT_RANGE_AU := 5.0
 const STAR_LIGHT_RANGE := STAR_LIGHT_RANGE_AU * WORLD_UNITS_PER_AU
 const STAR_LIGHT_ENERGY := 1500.0
 const SOLAR_LUMINOSITY := 3.828e26
+const PLANET_SURFACE_STYLE_COUNT := 4
 
 signal bodies_changed
 signal setted_running(running: bool)
@@ -71,14 +74,22 @@ func _create_body_mesh(body: CelestialBody) -> MeshInstance3D:
 	sphere.radius = display_radius
 	sphere.height = display_radius * 2.0
 	mesh_instance.mesh = sphere
-	var material := StandardMaterial3D.new()
-	material.albedo_color = body.color
-	material.emission_enabled = body.is_star()
-	if material.emission_enabled:
-		material.emission = body.color
-		material.emission_energy_multiplier = 3.0
+	var body_hash := body.id.hash()
+	var surface_seed := float(posmod(body_hash, 65536)) / 65536.0
+	if body.is_star():
+		var material := ShaderMaterial.new()
+		material.shader = STAR_SURFACE_SHADER
+		material.set_shader_parameter("body_tint", body.color)
+		material.set_shader_parameter("surface_seed", surface_seed)
+		mesh_instance.material_override = material
 		_add_star_effects(mesh_instance, body, display_radius)
-	mesh_instance.material_override = material
+	else:
+		var material := ShaderMaterial.new()
+		material.shader = PLANET_SURFACE_SHADER
+		material.set_shader_parameter("body_tint", body.color)
+		material.set_shader_parameter("surface_seed", surface_seed)
+		material.set_shader_parameter("surface_style", posmod(body_hash, PLANET_SURFACE_STYLE_COUNT))
+		mesh_instance.material_override = material
 	return mesh_instance
 
 func _add_star_effects(mesh_instance: MeshInstance3D, body: CelestialBody, display_radius: float) -> void:
