@@ -98,7 +98,7 @@ anchor_bottom = 1.0
 offset_top = 575.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
+mouse_filter = 2
 theme = ExtResource("1_4kkc7")
 script = ExtResource("2_4kkc7")
 

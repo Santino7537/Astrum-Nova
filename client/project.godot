@@ -16,12 +16,16 @@ config/features=PackedStringArray("4.6", "GL Compatibility")
 
 [autoload]
 
-SceneTransition="*res://Scripts/Globals/scene_transition.gd"
 GlobalSettings="*uid://psc365gn5fca"
 GlobalProjectUtilities="*uid://cwyr65cp76gau"
 Constants="*uid://dmrfo31lct7l5"
 GlobalSimulationUtils="*uid://c2rmt4xlbwmbb"
 NetworkClient="*res://Scripts/Globals/network_client.gd"
+SceneTransition="*res://Scripts/Globals/scene_transition.gd"
+
+[display]
+
+window/size/mode=3
 
 [physics]
 
