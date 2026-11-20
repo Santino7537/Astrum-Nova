@@ -82,7 +82,7 @@ func _on_exit_pressed() -> void:
 	transition.tween_property(overlay, "color:a", 0.8, 1.0)
 	transition.tween_callback(func() -> void:
 		GlobalProjectUtilities.set_simulation_index(0)
-		var error := get_tree().change_scene_to_file("res://Scenes/UI/Menus/Main/main_menu.tscn")
+		var error := SceneTransition.change_scene_to_file("res://Scenes/UI/Menus/Main/main_menu.tscn")
 		if error != OK:
 			push_error("No se pudo abrir el menú principal: %s" % error)
 			var fade_back := create_tween()

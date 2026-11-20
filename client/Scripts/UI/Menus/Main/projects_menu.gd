@@ -156,7 +156,7 @@ func _open_project(project_path: String) -> void:
 	transition.tween_property(overlay, "color:a", 0.8, 1.0)
 	transition.tween_callback(func() -> void:
 		GlobalSettings.set_current_project_path(project_path)
-		var error := get_tree().change_scene_to_file("res://Scenes/tridimentional_view.tscn")
+		var error := SceneTransition.change_scene_to_file("res://Scenes/tridimentional_view.tscn")
 		if error != OK:
 			push_error("No se pudo abrir la escena tridimensional: %s" % error)
 			var fade_back := create_tween()

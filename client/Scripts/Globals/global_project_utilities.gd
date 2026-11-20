@@ -6,6 +6,8 @@ signal changed_body(simulation_index: int)
 var simulation_index: int = 0
 
 func set_simulation_index(index: int) -> void:
+	if index != simulation_index:
+		SceneTransition.freeze_screen()
 	simulation_index = index
 	selected_simulation.emit(index)
 

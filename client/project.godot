@@ -16,6 +16,7 @@ config/features=PackedStringArray("4.6", "GL Compatibility")
 
 [autoload]
 
+SceneTransition="*res://Scripts/Globals/scene_transition.gd"
 GlobalSettings="*uid://psc365gn5fca"
 GlobalProjectUtilities="*uid://cwyr65cp76gau"
 Constants="*uid://dmrfo31lct7l5"
