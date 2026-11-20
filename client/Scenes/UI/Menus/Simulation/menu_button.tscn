@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://5yn35yhwcl0b"]
 
-[ext_resource type="Script" uid="uid://bpgl5gudkugyh" path="res://Scripts/UI/Menus/Projects/SimulationScene/menu_button.gd" id="1_pm2xx"]
+[ext_resource type="Script" uid="uid://bpgl5gudkugyh" path="res://Scripts/UI/Menus/Simulation/menu_button.gd" id="1_pm2xx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ik22"]
 bg_color = Color(0.06, 0.09, 0.16, 0.5)
@@ -9,6 +9,15 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.4, 0.6, 0.85, 0.3)
+corner_radius_bottom_right = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_62hi4"]
+bg_color = Color(0.35686275, 0.6156863, 0.9764706, 0.21568628)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5019608, 0.7490196, 1, 0.7058824)
 corner_radius_bottom_right = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pm2xx"]
@@ -29,6 +38,7 @@ size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
 theme_override_font_sizes/font_size = 13
 theme_override_styles/normal = SubResource("StyleBoxFlat_0ik22")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_62hi4")
 theme_override_styles/hover = SubResource("StyleBoxFlat_pm2xx")
 text = "Menu"
 script = ExtResource("1_pm2xx")

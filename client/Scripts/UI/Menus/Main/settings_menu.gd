@@ -2,10 +2,17 @@ extends Control
 
 @onready var settings_panel: PanelContainer = $SettingsPanel
 @onready var path_line_edit: LineEdit = $SettingsPanel/VBoxContainer/PathRow/PathLineEdit
+@onready var window_mode_option_button: OptionButton = $SettingsPanel/VBoxContainer/DisplayRow/WindowModeOptionButton
 
 func _ready() -> void:
 	path_line_edit.text = GlobalSettings.get_file_system_path()
+	window_mode_option_button.add_item("Windowed", Window.MODE_WINDOWED)
+	window_mode_option_button.add_item("Fullscreen", Window.MODE_FULLSCREEN)
+	window_mode_option_button.select(window_mode_option_button.get_item_index(GlobalSettings.get_window_mode()))
 	_animate_in()
+
+func _on_window_mode_selected(index: int) -> void:
+	GlobalSettings.set_window_mode(window_mode_option_button.get_item_id(index))
 
 func _animate_in() -> void:
 

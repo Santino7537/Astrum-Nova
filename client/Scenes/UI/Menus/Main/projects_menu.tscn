@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cv5bh02l7v46p"]
 
-[ext_resource type="Theme" uid="uid://ckxp7lacnlyty" path="res://Scripts/UI/Menus/ui_theme.tres" id="1_b17du"]
-[ext_resource type="Script" uid="uid://bobq68utoc5a7" path="res://Scripts/UI/Menus/Projects/projects_menu.gd" id="2_2o7w0"]
+[ext_resource type="Theme" uid="uid://ckxp7lacnlyty" path="res://Assets/ui_theme.tres" id="1_b17du"]
+[ext_resource type="Script" uid="uid://bobq68utoc5a7" path="res://Scripts/UI/Menus/Main/projects_menu.gd" id="2_2o7w0"]
 
 [sub_resource type="StyleBoxFlat" id="PanelStyle"]
 content_margin_left = 28.0
@@ -28,6 +28,18 @@ border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.4, 0.6, 0.85, 0.3)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3xj52"]
+bg_color = Color(0.35686275, 0.6156863, 0.9764706, 0.21568628)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5019608, 0.7490196, 1, 0.7058824)
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
@@ -132,6 +144,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.85, 0.92, 0.98, 0.9)
 theme_override_font_sizes/font_size = 13
 theme_override_styles/normal = SubResource("SecondaryButton")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3xj52")
 theme_override_styles/hover = SubResource("SecondaryButtonHover")
 text = "Close"
 
