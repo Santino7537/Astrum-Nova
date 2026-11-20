@@ -69,6 +69,22 @@ func add_body(body: CelestialBody, notify_change: bool = true) -> MeshInstance3D
 ## Crea una instancia visible del cuerpo
 func _create_body_mesh(body: CelestialBody) -> MeshInstance3D:
 	var mesh_instance := MeshInstance3D.new()
+	_configure_body_mesh(mesh_instance, body)
+	return mesh_instance
+
+func update_body_visual(body_id: String) -> void:
+	var body := get_body_by_id(body_id)
+	var mesh_instance := get_body_mesh(body_id)
+	if body == null or not is_instance_valid(mesh_instance):
+		push_error("Cannot update the visual for missing body '%s'." % body_id)
+		return
+
+	for child in mesh_instance.get_children():
+		mesh_instance.remove_child(child)
+		child.queue_free()
+	_configure_body_mesh(mesh_instance, body)
+
+func _configure_body_mesh(mesh_instance: MeshInstance3D, body: CelestialBody) -> void:
 	var sphere := SphereMesh.new()
 	var display_radius := body.physical_radius * RADIUS_SCALE
 	sphere.radius = display_radius
@@ -90,7 +106,6 @@ func _create_body_mesh(body: CelestialBody) -> MeshInstance3D:
 		material.set_shader_parameter("surface_seed", surface_seed)
 		material.set_shader_parameter("surface_style", posmod(body_hash, PLANET_SURFACE_STYLE_COUNT))
 		mesh_instance.material_override = material
-	return mesh_instance
 
 func _add_star_effects(mesh_instance: MeshInstance3D, body: CelestialBody, display_radius: float) -> void:
 	var luminosity_ratio := body.luminosity() / SOLAR_LUMINOSITY

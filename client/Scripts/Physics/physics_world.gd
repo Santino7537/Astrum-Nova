@@ -87,28 +87,66 @@ func _calculate_acceleration_range(start_index: int, end_index: int, positions: 
 
 ## Hace los cálculos de aceleración, velocidad y paso para mover los cuerpos
 func step(delta_seconds: float) -> Array[Dictionary]:
-	if delta_seconds <= 0.0:
-		push_error("Physics delta must be positive")
+	if not is_finite(delta_seconds) or delta_seconds <= 0.0:
+		push_error("Physics delta must be finite and positive.")
 		return []
 	
 	if not _accelerations_ready:
 		var initial_accelerations := calculate_accelerations()
+		if not _vectors_are_finite(initial_accelerations):
+			push_error("Physics produced non-finite initial accelerations.")
+			return []
 		_apply_accelerations(initial_accelerations)
 		_accelerations_ready = true
 	
 	var bodies := GlobalSimulationUtils.get_bodies()
+	var half_step_velocities: Array[Vector3] = []
+	var next_positions: Array[Vector3] = []
 	for body in bodies:
-		body.velocity += body.acceleration * (delta_seconds * 0.5)
-		body.position += body.velocity * delta_seconds
+		if not body.position.is_finite() or not body.velocity.is_finite() or not body.acceleration.is_finite():
+			_accelerations_ready = false
+			push_error("Physics cannot step a body with non-finite state.")
+			return []
+		var half_step_velocity := body.velocity + body.acceleration * (delta_seconds * 0.5)
+		var next_position := body.position + half_step_velocity * delta_seconds
+		if not half_step_velocity.is_finite() or not next_position.is_finite():
+			_accelerations_ready = false
+			push_error("Physics step would produce a non-finite body state.")
+			return []
+		half_step_velocities.append(half_step_velocity)
+		next_positions.append(next_position)
+
+	for body_index in bodies.size():
+		bodies[body_index].velocity = half_step_velocities[body_index]
+		bodies[body_index].position = next_positions[body_index]
 	
 	var new_accelerations := calculate_accelerations()
+	if not _vectors_are_finite(new_accelerations):
+		_accelerations_ready = false
+		push_error("Physics produced non-finite accelerations after movement.")
+		return []
+
+	var next_velocities: Array[Vector3] = []
 	for body_index in bodies.size():
-		var body := GlobalSimulationUtils.get_body_by_index(body_index)
-		body.velocity += new_accelerations[body_index] * (delta_seconds * 0.5)
-		body.acceleration = new_accelerations[body_index]
+		var next_velocity := bodies[body_index].velocity + new_accelerations[body_index] * (delta_seconds * 0.5)
+		if not next_velocity.is_finite():
+			_accelerations_ready = false
+			push_error("Physics step would produce a non-finite velocity.")
+			return []
+		next_velocities.append(next_velocity)
+
+	for body_index in bodies.size():
+		bodies[body_index].velocity = next_velocities[body_index]
+		bodies[body_index].acceleration = new_accelerations[body_index]
 	GlobalSimulationUtils.set_simulation_time(GlobalSimulationUtils.get_simulation_time() + delta_seconds)
 	collision_events = _resolve_collisions()
 	return collision_events
+
+func _vectors_are_finite(vectors: Array[Vector3]) -> bool:
+	for vector in vectors:
+		if not vector.is_finite():
+			return false
+	return true
 
 ## Aplica la aceleración en todos los cuerpos
 func _apply_accelerations(accelerations: Array[Vector3]) -> void:
@@ -136,21 +174,58 @@ func _resolve_collisions() -> Array[Dictionary]:
 		if not GlobalSimulationUtils.has_existing_body(first_id) or not GlobalSimulationUtils.has_existing_body(second_id):
 			continue
 		
-		var merged := _merge_bodies(first, second)
-		GlobalSimulationUtils.remove_body(first_id)
-		GlobalSimulationUtils.remove_body(second_id)
-		GlobalSimulationUtils.add_body(merged)
+		var survivor: CelestialBody
+		var consumed: CelestialBody
+		if first.mass >= second.mass:
+			survivor = first
+			consumed = second
+		else:
+			survivor = second
+			consumed = first
+
+		if not _merge_bodies(survivor, consumed):
+			continue
+		GlobalSimulationUtils.update_body_visual(survivor.id)
+		GlobalSimulationUtils.remove_body(consumed.id)
 		
-		events.append({"removed_ids": [first_id, second_id], "new_id": merged.id, "time": GlobalSimulationUtils.get_simulation_time()})
+		events.append({
+			"survivor_id": survivor.id,
+			"removed_id": consumed.id,
+			"time": GlobalSimulationUtils.get_simulation_time()
+		})
 	_accelerations_ready = false
 	return events
 
-## Crea un nuevo cuerpo a partir de la fusión de dos cuerpos
-func _merge_bodies(first: CelestialBody, second: CelestialBody) -> CelestialBody:
-	var total_mass := first.mass + second.mass
-	var merged_position := (first.position * first.mass + second.position * second.mass) / total_mass
-	var merged_velocity := (first.velocity * first.mass + second.velocity * second.mass) / total_mass
-	var merged_radius := pow(pow(first.physical_radius, 3.0) + pow(second.physical_radius, 3.0), 1.0 / 3.0)
-	
-	var dominant_body: CelestialBody = first if first.mass / total_mass > second.mass / total_mass else second
-	return CelestialBody.new(total_mass, merged_radius, dominant_body.name, merged_position, merged_velocity, dominant_body.color)
+## Conserva el cuerpo dominante y transfiere el momento del cuerpo consumido.
+func _merge_bodies(survivor: CelestialBody, consumed: CelestialBody) -> bool:
+	var survivor_mass := survivor.mass
+	var consumed_mass := consumed.mass
+	var total_mass := survivor_mass + consumed_mass
+	if not is_finite(survivor_mass) or not is_finite(consumed_mass) or survivor_mass <= 0.0 or consumed_mass <= 0.0 or not is_finite(total_mass) or total_mass <= 0.0:
+		push_error("Cannot merge bodies with invalid masses.")
+		return false
+	if not survivor.position.is_finite() or not consumed.position.is_finite() or not survivor.velocity.is_finite() or not consumed.velocity.is_finite():
+		push_error("Cannot merge bodies with invalid positions or velocities.")
+		return false
+	if not is_finite(survivor.physical_radius) or not is_finite(consumed.physical_radius) or survivor.physical_radius <= 0.0 or consumed.physical_radius <= 0.0:
+		push_error("Cannot merge bodies with invalid radii.")
+		return false
+
+	var survivor_weight := survivor_mass / total_mass
+	var consumed_weight := consumed_mass / total_mass
+	var merged_position := survivor.position * survivor_weight + consumed.position * consumed_weight
+	var merged_velocity := survivor.velocity * survivor_weight + consumed.velocity * consumed_weight
+	var largest_radius := maxf(survivor.physical_radius, consumed.physical_radius)
+	var survivor_radius_ratio := survivor.physical_radius / largest_radius
+	var consumed_radius_ratio := consumed.physical_radius / largest_radius
+	var merged_radius := largest_radius * pow(pow(survivor_radius_ratio, 3.0) + pow(consumed_radius_ratio, 3.0), 1.0 / 3.0)
+	if not merged_position.is_finite() or not merged_velocity.is_finite() or not is_finite(merged_radius):
+		push_error("Collision produced a non-finite merged body.")
+		return false
+
+	survivor.position = merged_position
+	survivor.velocity = merged_velocity
+	survivor.physical_radius = merged_radius
+	survivor.mass = total_mass
+	survivor.acceleration = Vector3.ZERO
+	return true

@@ -111,19 +111,46 @@ func _create_body_visual(body: CelestialBody) -> void:
 	trail_instance.material_override = trail_material
 	add_child(trail_instance)
 	trial_intances.append(trail_instance)
-	trails[body.id] = {"mesh": trail, "points": PackedVector3Array()}
+	trails[body.id] = {"mesh": trail, "points": PackedVector3Array(), "instance": trail_instance}
 
 func _process(_frame_delta: float) -> void:
+	var collision_events: Array[Dictionary] = []
 	if GlobalSimulationUtils.get_running():
-		world.step(_frame_delta * GlobalSimulationUtils.get_playback_speed())
-		if is_instance_valid(body_inspector_menu):
-			body_inspector_menu.update_values()
+		collision_events = world.step(_frame_delta * GlobalSimulationUtils.get_playback_speed())
 	_update_visuals()
+	_handle_collision_events(collision_events)
+	if GlobalSimulationUtils.get_running() and is_instance_valid(body_inspector_menu):
+		body_inspector_menu.update_values()
+
+func _handle_collision_events(collision_events: Array[Dictionary]) -> void:
+	for collision_event in collision_events:
+		var survivor_id: String = collision_event["survivor_id"]
+		var removed_id: String = collision_event["removed_id"]
+		_remove_body_trail(removed_id)
+		if orbital_camera.target_id == removed_id or orbital_camera.target_id == survivor_id:
+			orbital_camera.select_body(survivor_id)
+
+func _remove_body_trail(body_id: String) -> void:
+	var trail_data: Dictionary = trails.get(body_id, {})
+	if trail_data.is_empty():
+		return
+
+	var trail_instance: MeshInstance3D = trail_data.get("instance")
+	if is_instance_valid(trail_instance):
+		trail_instance.queue_free()
+		trial_intances.erase(trail_instance)
+	trails.erase(body_id)
 
 func _update_visuals() -> void:
 	for body in GlobalSimulationUtils.get_bodies():
 		var body_id := body.id
+		if not body.position.is_finite():
+			push_error("Cannot update visual for body '%s': its position is non-finite." % body_id)
+			continue
 		var scene_position := body.position / (Constants.AU / GlobalSimulationUtils.WORLD_UNITS_PER_AU)
+		if not scene_position.is_finite():
+			push_error("Cannot update visual for body '%s': its scene position is non-finite." % body_id)
+			continue
 		if GlobalSimulationUtils.has_existing_body(body_id):
 			GlobalSimulationUtils.get_body_mesh(body_id).position = scene_position
 		if trails.has(body_id):

@@ -31,33 +31,54 @@ func _ready() -> void:
 	camera.near = 0.0005
 	add_child(camera)
 
-## Ajusta la distancia mínima actuál de la cámara respecto al cuerpo observado.
-func _set_current_min_distance(body_radius: float) -> void:
-	current_min_distance = body_radius / tan(deg_to_rad(camera.fov) / 4.0)
-	distance = current_min_distance
-
 ## Pone a la cámara mirando al objeto seleccionado
 func select_body(body_id: String) -> void:
 	if !GlobalSimulationUtils.has_existing_body(body_id):
 		return
+	var body := GlobalSimulationUtils.get_body_by_id(body_id)
+	var body_mesh := GlobalSimulationUtils.get_body_mesh(body_id)
+	if body == null or not is_instance_valid(body_mesh):
+		push_error("Cannot select body '%s': its data or mesh is missing." % body_id)
+		return
+	if not is_finite(body.physical_radius) or body.physical_radius <= 0.0:
+		push_error("Cannot select body '%s': its radius is invalid." % body_id)
+		return
+	if not body_mesh.global_position.is_finite():
+		push_error("Cannot select body '%s': its mesh position is non-finite." % body_id)
+		return
+
+	var body_radius := body.physical_radius * GlobalSimulationUtils.RADIUS_SCALE
+	var view_distance := body_radius / tan(deg_to_rad(camera.fov) / 4.0)
+	if not is_finite(view_distance) or view_distance <= 0.0:
+		push_error("Cannot select body '%s': its camera distance is invalid." % body_id)
+		return
+
 	target_id = body_id
-	selected_body.emit(target_id)
-	target_mesh = GlobalSimulationUtils.get_body_mesh(body_id)
-	
-	var body_radius := GlobalSimulationUtils.get_body_by_id(body_id).physical_radius
-	_set_current_min_distance(body_radius * GlobalSimulationUtils.RADIUS_SCALE)
+	target_mesh = body_mesh
+	current_min_distance = clampf(view_distance, camera.near * 2.0, current_max_distance)
+	distance = current_min_distance
 	_update_transform()
+	selected_body.emit(target_id)
 
 ## Mueve la cámara a donde la mueve el usuario
 func _update_transform() -> void:
-	var target_position := target_mesh.global_position if is_instance_valid(target_mesh) else Vector3.ZERO
+	if not is_instance_valid(target_mesh):
+		return
+	var target_position := target_mesh.global_position
+	if not target_position.is_finite() or not is_finite(distance):
+		push_error("Cannot update the orbital camera from a non-finite target transform.")
+		return
 	var horizontal_distance := distance * cos(elevation)
-	
-	camera.global_position = target_position + Vector3(
+	var camera_position := target_position + Vector3(
 		horizontal_distance * sin(azimuth),
 		distance * sin(elevation),
 		horizontal_distance * cos(azimuth)
 	)
+	if not camera_position.is_finite():
+		push_error("Orbital camera position became non-finite.")
+		return
+
+	camera.global_position = camera_position
 	camera.look_at(target_position, Vector3.UP)
 
 ## Acerca o aleja la cámara
