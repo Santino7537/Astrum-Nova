@@ -1,5 +1,12 @@
 extends Node
 
+const STAR_AURA_SHADER := preload("res://Shaders/star_aura.gdshader")
+const WORLD_UNITS_PER_AU := 400.0
+const STAR_LIGHT_RANGE_AU := 5.0
+const STAR_LIGHT_RANGE := STAR_LIGHT_RANGE_AU * WORLD_UNITS_PER_AU
+const STAR_LIGHT_ENERGY := 1500.0
+const SOLAR_LUMINOSITY := 3.828e26
+
 signal bodies_changed
 signal setted_running(running: bool)
 signal setted_simulation_time(simulation_time: float)
@@ -66,11 +73,34 @@ func _create_body_mesh(body: CelestialBody) -> MeshInstance3D:
 	mesh_instance.mesh = sphere
 	var material := StandardMaterial3D.new()
 	material.albedo_color = body.color
-	material.emission_enabled = body.mass >= 1.6e29
-	material.emission = body.color
-	material.emission_energy_multiplier = 1.5 if material.emission_enabled else 0.0
+	material.emission_enabled = body.is_star()
+	if material.emission_enabled:
+		material.emission = body.color
+		material.emission_energy_multiplier = 3.0
+		_add_star_effects(mesh_instance, body, display_radius)
 	mesh_instance.material_override = material
 	return mesh_instance
+
+func _add_star_effects(mesh_instance: MeshInstance3D, body: CelestialBody, display_radius: float) -> void:
+	var luminosity_ratio := body.luminosity() / SOLAR_LUMINOSITY
+	var star_light := OmniLight3D.new()
+	star_light.light_color = Color.WHITE
+	star_light.light_energy = clampf(STAR_LIGHT_ENERGY * sqrt(luminosity_ratio), 100.0, 15000.0)
+	star_light.omni_range = STAR_LIGHT_RANGE
+	star_light.omni_attenuation = 2.0
+	star_light.shadow_enabled = true
+	mesh_instance.add_child(star_light)
+
+	var aura_mesh := QuadMesh.new()
+	aura_mesh.size = Vector2.ONE * display_radius * 5.0
+	var aura := MeshInstance3D.new()
+	aura.mesh = aura_mesh
+	aura.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var aura_material := ShaderMaterial.new()
+	aura_material.shader = STAR_AURA_SHADER
+	aura_material.set_shader_parameter("aura_color", body.color)
+	aura.material_override = aura_material
+	mesh_instance.add_child(aura)
 
 func remove_body(body_id: String) -> void:
 	for body in bodies:

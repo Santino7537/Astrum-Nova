@@ -123,7 +123,7 @@ func _process(_frame_delta: float) -> void:
 func _update_visuals() -> void:
 	for body in GlobalSimulationUtils.get_bodies():
 		var body_id := body.id
-		var scene_position := body.position / (Constants.AU / 400)
+		var scene_position := body.position / (Constants.AU / GlobalSimulationUtils.WORLD_UNITS_PER_AU)
 		if GlobalSimulationUtils.has_existing_body(body_id):
 			GlobalSimulationUtils.get_body_mesh(body_id).position = scene_position
 		if trails.has(body_id):
