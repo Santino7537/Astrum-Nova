@@ -54,7 +54,12 @@ func _setup_scene() -> void:
 
 func _update_body_inspector(body_id: String) -> void:
 	var root := get_tree().current_scene
-	if root == null or body_id.is_empty():
+	if root == null:
+		return
+
+	if body_id.is_empty():
+		if is_instance_valid(body_inspector_menu):
+			body_inspector_menu.set_body_id("")
 		return
 	
 	if !root.has_node("BodyInspectorMenu"):
@@ -62,8 +67,12 @@ func _update_body_inspector(body_id: String) -> void:
 		root.add_child(body_inspector)
 		body_inspector.name = "BodyInspectorMenu"
 		body_inspector_menu = body_inspector.get_node("BodyInspectorMenu")
+		body_inspector_menu.connect("body_card_selected", Callable(self, "_on_body_card_selected"))
 	
 	body_inspector_menu.set_body_id(body_id)
+
+func _on_body_card_selected(body_id: String) -> void:
+	orbital_camera.select_body(body_id)
 
 func _set_default_values() -> void:
 	GlobalSimulationUtils.set_running(false)
@@ -91,7 +100,7 @@ func _setup_bodies(simulation_index: int) -> void:
 		body_inspector_menu.set_body_id("")
 
 func _create_body_visual(body: CelestialBody) -> void:
-	var mesh_instance := GlobalSimulationUtils.add_body(body)
+	var mesh_instance := GlobalSimulationUtils.add_body(body, false)
 	add_child(mesh_instance)
 	var trail := ImmediateMesh.new()
 	var trail_instance := MeshInstance3D.new()

@@ -1,5 +1,6 @@
 extends Node
 
+signal bodies_changed
 signal setted_running(running: bool)
 signal setted_simulation_time(simulation_time: float)
 signal setted_playback_speed(playback_speed: int)
@@ -44,13 +45,15 @@ func get_auxiliar_selected_body() -> String:
 func set_auxiliar_selected_body(body_id: String) -> void:
 	auxiliar_selected_body = body_id
 
-func add_body(body: CelestialBody) -> MeshInstance3D:
+func add_body(body: CelestialBody, notify_change: bool = true) -> MeshInstance3D:
 	if has_existing_body(body.id):
 		push_error("Body IDs must be unique")
 		return
 	var body_mesh := _create_body_mesh(body)
 	bodies.append(body)
 	bodies_meshes[body.id] = body_mesh
+	if notify_change:
+		bodies_changed.emit()
 	return body_mesh
 
 ## Crea una instancia visible del cuerpo
@@ -75,6 +78,7 @@ func remove_body(body_id: String) -> void:
 			bodies.erase(body)
 			bodies_meshes[body_id].queue_free()
 			bodies_meshes.erase(body_id)
+			bodies_changed.emit()
 			return
 
 func remove_all_bodies() -> void:
@@ -84,6 +88,7 @@ func remove_all_bodies() -> void:
 			mesh.queue_free()
 	
 	bodies_meshes = {}
+	bodies_changed.emit()
 
 func has_existing_body(body_id: String) -> bool:
 	return bodies_meshes.has(body_id)
