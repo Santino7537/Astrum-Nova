@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bsct62qj103en" path="res://Scripts/UI/Menus/Simulation/simulation.gd" id="1_u48dj"]
 [ext_resource type="Texture2D" uid="uid://cmfnbguq18xmp" path="res://Assets/skybox.jpg" id="2_tguo0"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/Menus/Simulation/axis_orientation_indicator.tscn" id="3_axis"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_gnjis"]
 panorama = ExtResource("2_tguo0")
@@ -20,3 +21,8 @@ script = ExtResource("1_u48dj")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1025809416]
 environment = SubResource("Environment_u48dj")
+
+[node name="AxisOrientationCanvas" type="CanvasLayer" parent="."]
+layer = 12
+
+[node name="AxisOrientationIndicator" parent="AxisOrientationCanvas" instance=ExtResource("3_axis")]
